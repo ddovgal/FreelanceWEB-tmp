@@ -1,0 +1,107 @@
+/**
+ * Tested in:
+ * Win7:
+ *   Chrome 34
+ *   Firefox 26 - 28
+ *   IE 10
+ *   Opera 12.16 (marker animation not working)
+ *   Safari 5.1.7 (marker animation, background
+ *      gradient not working)
+ * Android:
+ *   Chrome 34 (animation not working)
+**/
+
+body {
+    font: normal normal 13px/1.25 arial, helvetica, sans-serif;
+}
+
+.nav-primary {
+    background: #8ae1b7;
+    background-image:
+    linear-gradient(
+            to bottom,
+            rgba(118, 193, 157, 0),
+            rgba(118, 193, 157, 0) 90%,
+            rgba(118, 193, 157, 100) 90%,
+            rgba(118, 193, 157, 100) 100%
+    );
+    clear: both;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+.nav-primary li {
+    display: inline-block;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    vertical-align: bottom; /* IE9 fix: li v-aligns with baseline on hover without this */
+}
+
+.nav-primary a {
+    color: #fff;
+    display: block;
+    font-size: 110%;
+    font-weight: bold;
+    overflow: hidden;
+    padding: 0.99em 1.5em; /* slightly less than one to prevent rounding error */
+    position: relative;
+    text-decoration: none;
+    -moz-transition: background 0.4s ease-out;
+    -o-transition: background 0.4s ease-out;
+    -webkit-transition: background 0.4s ease-out;
+    transition: background 0.4s ease-out;
+}
+
+.nav-primary a::after {
+    background: #b82222;
+    content: "";
+    height: 0.714em;
+    left: 50%;
+    margin-left: -0.42857em;
+    position: absolute;
+    top: -0.857em;
+    -moz-transform: rotate( 45deg );
+    -ms-transform: rotate( 45deg );
+    -o-transform: rotate( 45deg );
+    -webkit-transform: rotate( 45deg );
+    transform: rotate( 45deg );
+    -moz-transition: top 0.3s ease-out;
+    -o-transition: top 0.3s ease-out;
+    -webkit-transition: top 0.3s ease-out;
+    transition: top 0.3s ease-out;
+    width: 0.714em;
+}
+
+.nav-primary a:hover {
+    background: #6cb08f;
+    background-image:
+    linear-gradient(
+            rgba(78, 127, 103, 0),
+            rgba(78, 127, 103, 0) 90%,
+            rgba(78, 127, 103, 100) 90%,
+            rgba(78, 127, 103, 100) 100%
+    );
+    overflow: hidden;
+    position: relative;
+}
+
+.nav-primary a:hover::after {
+    top: -5px;
+}
+
+@media only screen and (max-width: 600px) {
+    .nav-primary a {
+        border-radius: 0.6em;
+        margin: 0.35em;
+        padding: 0.5em;
+    }
+
+    .nav-primary a:hover {
+        background-image: none;
+        /*border: 0.25em solid rgba(78, 127, 103, 100);
+        padding: 0.25em;*/
+        box-shadow: inset 0 -5px 0 0 rgba(78, 127, 103, 100);
+    }
+}
