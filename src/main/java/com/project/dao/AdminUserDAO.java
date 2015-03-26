@@ -19,15 +19,15 @@ public class AdminUserDAO implements CRUD<AdminUser> {
     }
 
     @Override
-    public AdminUser create(AdminUser object) {
+    public long create(AdminUser object) {
         Session session = sessionFactory.getCurrentSession();
         session.persist(object);
-        return object;
+        return object.getId();
     }
 
     @Override
     @Transactional(readOnly = true)
-    public AdminUser get(int id) {
+    public AdminUser get(long id) {
         Session session = sessionFactory.getCurrentSession();
         return (AdminUser) session.get(AdminUser.class, id);
     }

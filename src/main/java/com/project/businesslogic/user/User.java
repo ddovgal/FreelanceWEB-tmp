@@ -1,5 +1,8 @@
 package com.project.businesslogic.user;
 
+import com.project.businesslogic.meta.UserType;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import javax.persistence.*;
 import java.util.Date;
 
@@ -15,20 +18,20 @@ public class User {
     /**
      * Defines the type of user 
      */
-    private int userType;
-    
-    private String login;
+    @Enumerated(EnumType.STRING)
+    private UserType userType;
 
     private String password;
 
+    @Column(unique = true)
+    private String email;
     private String snf;
 
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     @Temporal(TemporalType.TIMESTAMP)
     private Date birthday;
 
     private double rating;
-
-    private String email;
 
     @Lob
     private String image;
@@ -81,14 +84,6 @@ public class User {
         this.password = password;
     }
 
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
     public String getSnf() {
         return snf;
     }
@@ -97,11 +92,25 @@ public class User {
         this.snf = snf;
     }
 
-    public int getUserType() {
+    public UserType getUserType() {
         return userType;
     }
 
-    public void setUserType(int userType) {
+    public void setUserType(UserType userType) {
         this.userType = userType;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", userType=" + userType +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", snf='" + snf + '\'' +
+                ", birthday=" + birthday +
+                ", rating=" + rating +
+                ", image='" + image + '\'' +
+                '}';
     }
 }

@@ -5,20 +5,20 @@
        xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans 
        http://www.springframework.org/schema/beans/spring-beans.xsd
-       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
-       http://www.springframework.org/schema/mvc 
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/mvc
        http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd">
 
-       <context:component-scan base-package="com.project.controller"/>
-       
-       <!-- Maps '/' requests to the 'home' view -->
-       <mvc:view-controller path="/" view-name="/public/index"/>
-       
-       <mvc:resources mapping="/view/res/**" location="/view/res/" />
-       <import resource="spring-config.xml"/>
+    <import resource="spring-config.xml"/>
 
-       <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-              <property name="prefix" value="/view/" />
+       <context:component-scan base-package="com.project.controller"/>
+       <mvc:annotation-driven/>
+       <mvc:resources mapping="/res/**" location="/res/" />
+
+
+       <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+              <property name="prefix" value="/view/"/>
               <property name="suffix" value=".jsp" />
        </bean>
 
