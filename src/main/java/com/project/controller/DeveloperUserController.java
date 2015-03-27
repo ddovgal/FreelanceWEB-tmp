@@ -30,7 +30,7 @@ public class DeveloperUserController {
         System.out.println(developerUser);
         try {
             long id = developerUserDAO.create(developerUser);
-            ModelAndView modelAndView =  new ModelAndView("/home");
+            ModelAndView modelAndView =  new ModelAndView("public/success/on_register_success");
             return modelAndView;
         } catch (Exception e) {
             ModelAndView modelAndView =  new ModelAndView("public/developer_register");

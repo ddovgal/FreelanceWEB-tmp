@@ -28,7 +28,7 @@ public class CustomerUserController {
         System.out.println(customerUser);
         try {
             long id = customerUserDAO.create(customerUser);
-            ModelAndView modelAndView =  new ModelAndView("/home");
+            ModelAndView modelAndView =  new ModelAndView("public/success/on_register_success");
             return modelAndView;
         } catch (Exception e) {
             ModelAndView modelAndView =  new ModelAndView("public/customer_register");

@@ -28,7 +28,7 @@ public class AdminUserController {
         System.out.println(adminUser);
         try {
             long id = adminUserDAO.create(adminUser);
-            ModelAndView modelAndView =  new ModelAndView("/home");
+            ModelAndView modelAndView =  new ModelAndView("public/success/on_register_success");
             return modelAndView;
         } catch (Exception e) {
             ModelAndView modelAndView =  new ModelAndView("public/admin_register");

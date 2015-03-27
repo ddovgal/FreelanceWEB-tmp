@@ -9,7 +9,6 @@ public class HomeController {
 
     @RequestMapping("/home")
     public ModelAndView onIndex() {
-        System.out.println("show controller");
         ModelAndView modelAndView = new ModelAndView("public/index");
         return modelAndView;
     }
