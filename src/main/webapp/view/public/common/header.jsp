@@ -20,20 +20,28 @@
                         margin-top: 10px;
                         margin-right: 10px;
                         font-size: 14px;">
-            <div id="profileHeaderText" style="display: inline-block; width: 120px;">
-                <p id="lNameIconData" >
+            <div id="profileHeaderText" style="
+                display: inline-block;
+                width: 120px;
+                padding-left: 10px;">
+                <p id="lNameIconData" style="margin-top: 0px;
+                                             margin-bottom: 0px;
+                                             font-size: large;">
                     <a href="${root}/p-redirect">
                         <sec:authentication property="principal.snf" />
                     </a>
                 </p>
-                <p id="emailIconData" ><sec:authentication property="principal.email" /></p>
+                <p id="emailIconData" style="margin-top: 0px;
+                                             margin-bottom: 0px;">
+                    <sec:authentication property="principal.email" /></p>
             </div>
             <button style="float: right;
                             background: seagreen;
                             border: darkblue 2px;
                             border-radius: 5px;
                             margin-top: 5px;
-                            margin-right: 5px;"
+                            margin-right: 5px;
+                            height: 40px;"
                     onclick="javascript:formSubmit()"><p>Logout</p></button>
             <c:url value="/j_spring_security_logout" var="logoutUrl" />
             <!-- csrt for log out-->
