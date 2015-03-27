@@ -31,6 +31,7 @@ public class CustomerUserController {
             ModelAndView modelAndView =  new ModelAndView("public/success/on_register_success");
             return modelAndView;
         } catch (Exception e) {
+            e.printStackTrace();
             ModelAndView modelAndView =  new ModelAndView("public/customer_register");
             modelAndView.addObject("error", "Your attempt to register has failed! Please try again");
             return modelAndView;

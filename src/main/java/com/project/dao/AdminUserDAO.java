@@ -25,6 +25,7 @@ public class AdminUserDAO implements CRUD<AdminUser> {
         return object.getId();
     }
 
+
     @Override
     @Transactional(readOnly = true)
     public AdminUser get(long id) {

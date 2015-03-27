@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" version="3.0">
     <display-name>FreeCoin</display-name>
-    
+
+
     <welcome-file-list>
         <welcome-file>/view/public/index.jsp</welcome-file>
     </welcome-file-list>
@@ -14,7 +15,11 @@
         </servlet-class>
         <init-param>
             <param-name>contextConfigLocation</param-name>
-            <param-value>classpath:dispatcher-config.xml</param-value>
+            <param-value>
+                classpath:dispatcher-config.xml,
+                classpath:spring-config.xml,
+                classpath:spring-security.xml
+            </param-value>
         </init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>
@@ -25,7 +30,11 @@
 
     <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>classpath:dispatcher-config.xml</param-value>
+        <param-value>
+            classpath:dispatcher-config.xml,
+            classpath:spring-config.xml,
+            classpath:spring-security.xml
+        </param-value>
     </context-param>
     
     <listener>
@@ -33,5 +42,28 @@
             org.springframework.web.context.ContextLoaderListener
         </listener-class>
     </listener>
+
+
+
+    <!--Spring security-->
+    <filter>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <listener>
+        <listener-class>
+            org.springframework.security.web.session.HttpSessionEventPublisher
+        </listener-class>
+    </listener>
+
+    <session-config>
+        <!--30 minute-->
+        <session-timeout>30</session-timeout>
+    </session-config>
 
 </web-app>

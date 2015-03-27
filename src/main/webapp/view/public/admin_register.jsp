@@ -5,7 +5,7 @@
 <head>
     <title>Register Admin</title>
 
-    <link href="${pageContext.request.contextPath}/res/signup_form.css" rel="stylesheet" type="text/css" media="screen" />
+    <link href="${pageContext.request.contextPath}/res/form.css" rel="stylesheet" type="text/css" media="screen" />
     <script>
         function checkPasswords() {
             var pass = document.getElementById("password");
@@ -57,7 +57,7 @@
 
                         <p class="contact"><label for="birthday">DOB in (dd/MM/yyyy) format</label></p>
                         <input type="text" id="birthday" name="birthday" required="">
-                        <input class="buttom" name="submit" id="submit" tabindex="5" value="Sign me up!" type="submit">
+                        <input class="button" name="submit" id="submit" tabindex="5" value="Sign me up!" type="submit">
                     </form>
                 </div>
             </div>

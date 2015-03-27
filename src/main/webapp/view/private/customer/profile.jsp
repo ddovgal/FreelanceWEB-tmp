@@ -11,7 +11,7 @@
         <%@ include file="/view/public/common/header.jsp" %>
 
         <div class="content">
-            <h1 class="pageTitle">Admin profile</h1>
+            <h1 class="pageTitle">Customer profile</h1>
             <p></p>
         </div>
 
