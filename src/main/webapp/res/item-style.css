@@ -1,0 +1,15 @@
+.customer-central-bar {
+    margin-left: 350px;
+    width: 400px;
+}
+
+.jobItem {
+    width: 380px;
+    height: 40px;
+    margin-left: 10px;
+    margin-right: 10px;
+    padding-top: 5px;
+    background: yellow;
+    border: 2px #4b4b4b;
+    border-radius: 3px 3px 3px 3px;
+}

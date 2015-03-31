@@ -29,6 +29,7 @@ public class CustomerUserController {
         try {
             long id = customerUserDAO.create(customerUser);
             ModelAndView modelAndView =  new ModelAndView("public/success/on_register_success");
+            modelAndView.addObject("successMessage", "Customer user was successfully registered!");
             return modelAndView;
         } catch (Exception e) {
             e.printStackTrace();
@@ -37,4 +38,5 @@ public class CustomerUserController {
             return modelAndView;
         }
     }
+
 }

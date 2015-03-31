@@ -31,7 +31,7 @@ public class DeveloperUserDAO implements CRUD<DeveloperUser> {
     @Transactional(readOnly = true)
     public DeveloperUser get(long id) {
         Session session = sessionFactory.getCurrentSession();
-        return (DeveloperUser) session.get(DeveloperUser.class, id);
+        return (DeveloperUser) session.load(DeveloperUser.class, id);
     }
 
     @Override

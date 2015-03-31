@@ -2,39 +2,44 @@ package com.project.businesslogic;
 
 import com.project.businesslogic.user.CustomerUser;
 import com.project.businesslogic.user.DeveloperUser;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
 @Entity
-@Table(name = "order")
-public class Order {
+@Table(name = "job")
+public class Job {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
     
     private String title;
-    
+    private String tags;
     private String description;
-    
+
+    @DateTimeFormat(pattern = "dd/MM/yyyy")
     @Temporal(TemporalType.TIMESTAMP)
     private Date deadline;
+
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date publishTime;
     
-    private double price;
+    private String price;
     
     private boolean isFinished;
     
     private String agreement;
     
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private DeveloperUser developerUser;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private CustomerUser customerUser;
     
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<DeveloperUser> applicants;
 
 
@@ -86,11 +91,11 @@ public class Order {
         this.isFinished = isFinished;
     }
 
-    public double getPrice() {
+    public String getPrice() {
         return price;
     }
 
-    public void setPrice(double price) {
+    public void setPrice(String price) {
         this.price = price;
     }
 
@@ -116,5 +121,21 @@ public class Order {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public String getTags() {
+        return tags;
+    }
+
+    public void setTags(String tags) {
+        this.tags = tags;
+    }
+
+    public Date getPublishTime() {
+        return publishTime;
+    }
+
+    public void setPublishTime(Date publishTime) {
+        this.publishTime = publishTime;
     }
 }

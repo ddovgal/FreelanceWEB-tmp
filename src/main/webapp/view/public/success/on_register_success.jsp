@@ -11,7 +11,7 @@
     <%@ include file="/view/public/common/header.jsp" %>
 
     <div class="content">
-        <h1 class="pageTitle">New user was successfully registered!</h1>
+        <h1 class="pageTitle">${successMessage}</h1>
         <p></p>
     </div>
 
