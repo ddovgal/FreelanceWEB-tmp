@@ -27,20 +27,20 @@
           <input id="title" name="title" placeholder="title" required="" tabindex="1" type="text">
 
           <p class="contact"><label for="description">Description</label></p>
-          <input id="description" name="description" placeholder="description" required="" type="text" height="5" >
+          <input id="description" style="height: 60px" name="description" placeholder="description" required="" type="text" height="5" >
 
           <p class="contact"><label for="price">Price</label></p>
-          <input type="price" id="price" name="price" required="">
+          <input type="text" id="price" name="price" required="">
 
           <p class="contact"><label for="agreement">Agreement</label></p>
-          <input type="agreement" id="agreement" name="agreement" required="">
+          <input type="text" style="height: 60px" id="agreement" name="agreement" required="">
 
-          <p class="contact"><label for="tags">Agreement</label></p>
-          <input type="tags" id="tags" name="tags" required="">
+          <p class="contact"><label for="tags">Tags</label></p>
+          <input type="text" id="tags" name="tags" required="">
 
           <p class="contact"><label for="deadline">Deadline in (dd/MM/yyyy) format</label></p>
           <input type="text" id="deadline" name="deadline" required="">
-          <input type="hidden" value="<sec:authentication property="principal.email" />" name="customerId" />
+          <input type="hidden" value="<sec:authentication property="principal.id" />" name="customerId" />
 "
           <input class="button" name="submit" id="submit" tabindex="5" value="Register job!" type="submit">
         </form>

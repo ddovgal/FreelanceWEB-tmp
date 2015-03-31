@@ -10,16 +10,17 @@
 <div class="top">
     <c:if test="${isUserSessionOpened}">
         <div id="profileHeader" style="
-                        float: right;
-                        background: powderblue;
-                        display: inline-block;
-                        border: 2px cadetblue solid;
-                        border-radius: 5px 5px 5px 5px;
-                        height: 50px;
-                        width: 200px;
-                        margin-top: 10px;
-                        margin-right: 10px;
-                        font-size: 14px;">
+                          float: right;
+                          background: gold;
+                          display: inline-block;
+                          border: 2px black solid;
+                          border-radius: 5px 5px 5px 5px;
+                          height: 50px;
+                          width: 200px;
+                          margin-top: 10px;
+                          margin-right: 10px;
+                          font-size: 11px;
+                          color: black;">
             <div id="profileHeaderText" style="
                 display: inline-block;
                 width: 120px;
@@ -27,7 +28,7 @@
                 <p id="lNameIconData" style="margin-top: 0px;
                                              margin-bottom: 0px;
                                              font-size: large;">
-                    <a href="${root}/p-redirect">
+                    <a href="${root}/p-redirect" style="  color: navy;font-size: 14px;">
                         <sec:authentication property="principal.snf" />
                     </a>
                 </p>
@@ -35,14 +36,8 @@
                                              margin-bottom: 0px;">
                     <sec:authentication property="principal.email" /></p>
             </div>
-            <button style="float: right;
-                            background: seagreen;
-                            border: darkblue 2px;
-                            border-radius: 5px;
-                            margin-top: 5px;
-                            margin-right: 5px;
-                            height: 40px;"
-                    onclick="javascript:formSubmit()"><p>Logout</p></button>
+            <button class="button_example"
+                    onclick="javascript:formSubmit()">Logout</button>
             <c:url value="/j_spring_security_logout" var="logoutUrl" />
             <!-- csrt for log out-->
             <form id="logoutForm" action="${logoutUrl}" method="post" >
@@ -67,7 +62,7 @@
     <li><a href="" title="Contacts">Contacts</a></li>
 
     <c:if test="${!isUserSessionOpened}">
-        <li style="margin-left: 400px"><a href="" title="Sign up">Sign up</a>
+        <li style="margin-left: 600px"><a href="" title="Sign up">Sign up</a>
             <ul>
                 <li><a href="${root}/view/public/developer_register.jsp" title="Developer">Developer</a></li>
                 <li><a href="${root}/view/public/customer_register.jsp" title="Customer">Customer</a></li>

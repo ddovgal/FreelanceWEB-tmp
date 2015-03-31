@@ -18,6 +18,7 @@ public class Job {
     
     private String title;
     private String tags;
+    @Lob
     private String description;
 
     @DateTimeFormat(pattern = "dd/MM/yyyy")
@@ -27,10 +28,11 @@ public class Job {
     @Temporal(TemporalType.TIMESTAMP)
     private Date publishTime;
     
-    private String price;
+    private Float price;
     
     private boolean isFinished;
-    
+
+    @Lob
     private String agreement;
     
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
@@ -91,11 +93,11 @@ public class Job {
         this.isFinished = isFinished;
     }
 
-    public String getPrice() {
+    public Float getPrice() {
         return price;
     }
 
-    public void setPrice(String price) {
+    public void setPrice(Float price) {
         this.price = price;
     }
 

@@ -33,16 +33,24 @@ public class JobDAO implements CRUD<Job> {
     @Transactional(readOnly = true)
     public Job get(long id) {
         Session session = sessionFactory.getCurrentSession();
-        return (Job) session.load(Job.class, id);
+        return (Job) session.get(Job.class, id);
     }
 
     @Transactional(readOnly = true)
-    public List<Job> getByCriterion(String title, Double priceMin, Double priceMax, String[] tags,
+    public List<Job> getByCriterion(String title, Float priceMin, Float priceMax, String[] tags,
                                       Integer firstResult, Integer maxResults) {
         Session session = sessionFactory.getCurrentSession();
+
+        System.out.println("title: " + title);
+        System.out.println("priceMin: " + priceMin);
+        System.out.println("priceMax: " + priceMax);
+        System.out.println("tags: " + tags);
+        System.out.println("firstResult: " + firstResult);
+        System.out.println("maxResults: " + maxResults);
+
         Criteria criteria = session.createCriteria(Job.class, "o");
-        if (title != null) {
-            criteria.add(Restrictions.like("o.title", "%" + title + "%"));
+        if (title != null && !title.equals("")) {
+            criteria.add(Restrictions.ilike("o.title", "%" + title + "%"));
         }
         if (priceMin != null) {
             criteria.add(Restrictions.gt("o.price", priceMin));
@@ -53,9 +61,9 @@ public class JobDAO implements CRUD<Job> {
         if (tags != null) {
             String val = "";
             for (String tag : tags) {
-                val.concat("%" + tag + "%");
+                val += ("%" + tag + "%");
             }
-            criteria.add(Restrictions.like("o.title", val));
+            criteria.add(Restrictions.ilike("o.tags", val));
         }
         if (firstResult != null) {
             criteria.setFirstResult(firstResult);

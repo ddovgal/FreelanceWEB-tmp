@@ -4,12 +4,18 @@
 }
 
 .jobItem {
-    width: 380px;
-    height: 40px;
-    margin-left: 10px;
-    margin-right: 10px;
+    width: 500px;
+    height: 70px;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 20px;
     padding-top: 5px;
-    background: yellow;
-    border: 2px #4b4b4b;
-    border-radius: 3px 3px 3px 3px;
+    background: greenyellow;
+    border: solid 3px #4b4b4b;
+    border-radius: 10px 10px 10px 10px;
 }
+    .plainText {
+        font-size: smaller;
+        margin: 0 auto;
+        font-family: "Lucida Grande", "Lucida Sans Unicode", Tahoma, Sans-Serif;
+    }

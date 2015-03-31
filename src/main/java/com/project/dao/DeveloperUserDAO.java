@@ -1,6 +1,5 @@
 package com.project.dao;
 
-import com.project.businesslogic.user.AdminUser;
 import com.project.businesslogic.user.DeveloperUser;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -31,7 +30,7 @@ public class DeveloperUserDAO implements CRUD<DeveloperUser> {
     @Transactional(readOnly = true)
     public DeveloperUser get(long id) {
         Session session = sessionFactory.getCurrentSession();
-        return (DeveloperUser) session.load(DeveloperUser.class, id);
+        return (DeveloperUser) session.get(DeveloperUser.class, id);
     }
 
     @Override

@@ -29,7 +29,7 @@ public class CustomerUserDAO implements CRUD<CustomerUser> {
     @Transactional(readOnly = true)
     public CustomerUser get(long id) {
         Session session = sessionFactory.getCurrentSession();
-        return (CustomerUser) session.load(CustomerUser.class, id);
+        return (CustomerUser) session.get(CustomerUser.class, id);
     }
 
     @Override
