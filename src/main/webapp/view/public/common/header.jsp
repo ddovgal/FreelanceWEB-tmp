@@ -36,12 +36,16 @@
                     <sec:authentication property="principal.email" /></p>
             </div>
             <button style="float: right;
-                            background: seagreen;
                             border: darkblue 2px;
                             border-radius: 5px;
                             margin-top: 5px;
                             margin-right: 5px;
-                            height: 40px;"
+                            height: 40px;
+                            background: #4b8df9;
+                            color: #fbf7f7;
+                            font-weight: bold;
+                            text-shadow: 0 -1px 1px #222;
+                            font-family:Verdana, Geneva, sans-serif;"
                     onclick="javascript:formSubmit()"><p>Logout</p></button>
             <c:url value="/j_spring_security_logout" var="logoutUrl" />
             <!-- csrt for log out-->

@@ -24,24 +24,26 @@
         <form id="signup-form" action="${pageContext.request.contextPath}/jobs/register" method="post">
 
           <p class="contact"><label for="title">Title</label></p>
-          <input id="title" name="title" placeholder="title" required="" tabindex="1" type="text">
-
-          <p class="contact"><label for="description">Description</label></p>
-          <input id="description" name="description" placeholder="description" required="" type="text" height="40" >
-
-          <p class="contact"><label for="price">Price</label></p>
-          <input type="price" id="price" name="price" required="">
-
-          <p class="contact"><label for="agreement">Agreement</label></p>
-          <input type="agreement" id="agreement" name="agreement" required=""  height="40">
+          <input id="title" name="title" placeholder="title" required=""<%-- size="60"--%> type="text">
 
           <p class="contact"><label for="tags">Tags (use ; to split)</label></p>
-          <input type="tags" id="tags" name="tags" required="">
+          <input type="tags" id="tags" name="tags"<%-- size="60"--%> required="">
+
+          <p class="contact"><label for="description">Description</label></p>
+          <textarea id="description" name="description" placeholder="description" required="" type="text" rows="10" cols="60" style="max-width: 400px"></textarea>
+
+          <p class="contact"><label for="price">Price</label></p>
+          <input type="price" id="price" name="price"<%-- size="60"--%> required="">
 
           <p class="contact"><label for="deadline">Deadline in (dd/MM/yyyy) format</label></p>
-          <input type="text" id="deadline" name="deadline" required="">
+          <input type="text" id="deadline" name="deadline"<%-- size="60"--%> required="">
+
+          <p class="contact"><label for="agreement">Agreement</label></p>
+          <textarea type="agreement" id="agreement" name="agreement" required="" rows="10" cols="60" style="max-width: 400px"></textarea>
+
+          <div align="center"><input class="button" name="submit" id="submit" size="60" value="Register job!" type="submit" style="margin-top: 10px"></div>
+
           <input type="hidden" value="<sec:authentication property="principal.id" />" name="customerId" />
-          <input class="button" name="submit" id="submit" tabindex="5" value="Register job!" type="submit">
         </form>
       </div>
     </div>

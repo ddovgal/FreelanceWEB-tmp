@@ -6,6 +6,7 @@
 <head>
     <title>Customer profile</title>
     <link href="${root}/res/item-style.css" rel="stylesheet" type="text/css" media="screen" />
+    <link href="${pageContext.request.contextPath}/res/form.css" rel="stylesheet" type="text/css" media="screen" />
 
 </head>
 <body>
@@ -17,7 +18,7 @@
         <div class="content">
             <div id="leftBar">
                 <form id="button-form" action="${root}/jobs/newJob" method="post">
-                    <input class="button" name="submit" value="Create new job" type="submit">
+                    <input class="coolButton" name="submit" id="submit" size="60" value="Create new job" type="submit" style="margin-top: 10px">
                 </form>
             </div>
             <div id="centralBar" class="customer-central-bar">
