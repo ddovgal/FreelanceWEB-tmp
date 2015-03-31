@@ -12,7 +12,7 @@ body {
 footer {
     border-top: solid 3px #fff;
     min-height: 100px;
-    background: #ED6B16;
+    background: lightskyblue;
     border-radius: 0 0 10px 10px;
 }
 .clear {
@@ -20,7 +20,7 @@ footer {
 }
 
 .wrapper {
-    width: 1000px;
+    width: 1100px;
     margin: 20px auto;
     border-radius: 10px;
     border: solid 3px #fff;
@@ -29,7 +29,7 @@ footer {
 
 .top {
     min-height: 100px;
-    background: #ED6B16;
+    background: lightskyblue;
     border-radius: 10px 10px 0 0;
 }
 
@@ -119,4 +119,34 @@ footer {
 .navigation ul li:last-child a:hover {
     -webkit-border-radius: 0 0 5px 5px;
     border-radius: 0 0 5px 5px;
+}
+
+
+
+
+p.smallText {
+    font-size: 12px;
+}
+
+p.middleText {
+    font-style: italic;
+    font-size: 16px;
+}
+
+.simple-button {
+    margin-left: 20px;
+    -webkit-box-shadow:rgba(0,0,0,0.0.1) 0 1px 0 0;
+    -moz-box-shadow:rgba(0,0,0,0.0.1) 0 1px 0 0;
+    box-shadow:rgba(0,0,0,0.0.1) 0 1px 0 0;
+    background-color:#5B74A8;
+    border:1px solid #29447E;
+    font-family:'Lucida Grande',Tahoma,Verdana,Arial,sans-serif;
+    font-size:12px;
+    font-weight:700;
+    padding:2px 6px;
+    height:28px;
+    color:#fff;
+    border-radius:5px;
+    -moz-border-radius:5px;
+    -webkit-border-radius:5px
 }

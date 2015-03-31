@@ -17,7 +17,7 @@ public class ServiceMessage {
     private AdminUser adminUser;
     
     @ManyToOne(cascade = CascadeType.ALL)
-    private Order problemOrder;
+    private Job problemOrder;
     
     @ManyToOne(cascade = CascadeType.ALL)
     private User victim;
@@ -69,11 +69,11 @@ public class ServiceMessage {
         this.victim = victim;
     }
 
-    public Order getProblemOrder() {
+    public Job getProblemOrder() {
         return problemOrder;
     }
 
-    public void setProblemOrder(Order problemOrder) {
+    public void setProblemOrder(Job problemOrder) {
         this.problemOrder = problemOrder;
     }
 

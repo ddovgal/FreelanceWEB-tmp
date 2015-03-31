@@ -62,8 +62,8 @@
 
 <ul class="navigation">
     <li><a href="${root}/home" title="Home">Home</a></li>
-    <li><a href="" title="Jobs">Jobs</a></li>
-    <li><a href="" title="About us">About usss</a></li>
+    <li><a href="${root}/jobs/byCriterion" title="Jobs">Jobs</a></li>
+    <li><a href="" title="About us">About us</a></li>
     <li><a href="" title="Contacts">Contacts</a></li>
 
     <c:if test="${!isUserSessionOpened}">

@@ -30,7 +30,7 @@ public class AdminUserDAO implements CRUD<AdminUser> {
     @Transactional(readOnly = true)
     public AdminUser get(long id) {
         Session session = sessionFactory.getCurrentSession();
-        return (AdminUser) session.get(AdminUser.class, id);
+        return (AdminUser) session.load(AdminUser.class, id);
     }
 
     @Override

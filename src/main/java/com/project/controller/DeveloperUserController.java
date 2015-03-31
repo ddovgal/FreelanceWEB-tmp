@@ -31,6 +31,8 @@ public class DeveloperUserController {
         try {
             long id = developerUserDAO.create(developerUser);
             ModelAndView modelAndView =  new ModelAndView("public/success/on_register_success");
+            modelAndView.addObject("successMessage", "Developer user was successfully registered!");
+
             return modelAndView;
         } catch (Exception e) {
             e.printStackTrace();

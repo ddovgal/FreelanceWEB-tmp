@@ -18,7 +18,7 @@ public class Complaint {
     private String text;
     
     @ManyToOne
-    private Order problemOrder;
+    private Job problemJob;
 
 
     public long getId() {
@@ -29,12 +29,12 @@ public class Complaint {
         this.id = id;
     }
 
-    public Order getProblemOrder() {
-        return problemOrder;
+    public Job getProblemJob() {
+        return problemJob;
     }
 
-    public void setProblemOrder(Order problemOrder) {
-        this.problemOrder = problemOrder;
+    public void setProblemJob(Job problemJob) {
+        this.problemJob = problemJob;
     }
 
     public String getText() {
