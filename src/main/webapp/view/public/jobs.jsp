@@ -18,9 +18,9 @@
         <div class="left-bar">
             <div id="jobs-filter-form-container">
                 <form>
-                    <table style="color: #000000">
+                    <table style="color: #000000; margin-top: 10px; margin-left: 10px">
                         <tr>
-                            <td>Title:</td><td><input id="searchTitle" type="text" style="width: 120px" placeholder="title" name="title"></td>
+                            <td>Title:</td><td><input id="searchTitle" type="text" style="width: 120px" placeholder="" name="title"></td>
                         </tr>
                         <tr>
                             <td>Tags:</td><td><input id="searchTags" type="text" style="width: 120px" placeholder="tag1 tag2 .." name="tags"></td>
@@ -30,7 +30,9 @@
                                               max<input id="searchMaxRating" class="price" type="text" name="priceMax"></td>
                         </tr>
                         <tr>
-                            <td><button id="submitSearch"  class="button_example" type="submit" >Find</button></td>
+                            <div align="center" style="margin-top: 5px">
+                                <td><button id="submitSearch"  class="button_example" type="submit" >Find</button></td>
+                            </div>
                         </tr>
                     </table>
                 </form>
@@ -38,22 +40,26 @@
         </div>
         <div class="central-bar">
             <c:forEach items="${jobs}" var="job">
-                <div class="jobItem" style="font-size: smaller">
+                <div class="jobItem" style="font-size: smaller; margin-left: 8px">
                     <div style="background: #000000; color: white">
                         <p style="text-align: center;
                                 font-size: medium;
-                                margin-top: auto;">${job.title}</p>
+                                margin-top: auto;"><b>${job.title}</b></p>
                     </div>
-                    Price: ${job.price} <br>
-                    Publish date: ${job.publishTime} <br>
-                    Deadline: ${job.deadline} <br>
-                    Tags: ${job.tags} <br><hr>
-                    Description: ${job.description}
+                    <div style="margin-left: 10px; margin-right: 10px">
+                        <b>Price: </b>${job.price} <br>
+                        <b>Publish date: </b>${job.publishTime} <br>
+                        <b>Deadline: </b>${job.deadline} <br>
+                        <b>Tags: </b>${job.tags} <br><hr>
+                        <b>Description: </b>${job.description}
+                    </div>
+                    <form action="${root}/jobs/byId" method="get" style="margin-top: 10px; float: bottom">
+                        <div align="center">
+                            <input type="hidden" name="jobId" value="${job.id}"/>
+                            <button class="button_example" type="submit">See detail</button>
+                        </div>
+                    </form>
                 </div>
-                <form action="${root}/jobs/byId" method="get" >
-                    <input type="hidden" name="jobId" value="${job.id}"/>
-                    <button class="button_example" type="submit">Open</button>
-                </form>
             </c:forEach>
         </div>
         <div class="right-bar">

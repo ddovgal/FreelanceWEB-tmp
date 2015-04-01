@@ -53,12 +53,18 @@ public class JobController {
             }
 
             List<Job> jobs = jobService.getByCriterion(title, priceMin, priceMax, tagsArr, firstResult, maxResults);
+            for (Job job: jobs){
+                try {
+                    job.setDescription(job.getDescription().substring(0, 200));
+                }catch (Exception e){}
+            }
             ModelAndView modelAndView = new ModelAndView("public/jobs");
             modelAndView.addObject("jobs", jobs);
             return modelAndView;
         } catch (Exception e) {
             e.printStackTrace();
             ModelAndView modelAndView = new ModelAndView("public/error/error");
+            modelAndView.addObject(e);
             return modelAndView;
 
         }

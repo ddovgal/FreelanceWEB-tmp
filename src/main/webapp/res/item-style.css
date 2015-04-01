@@ -5,12 +5,12 @@
 
 .jobItem {
     width: 500px;
-    height: 70px;
+    height: 240px;
     margin-left: 20px;
     margin-right: 20px;
     margin-bottom: 20px;
     padding-top: 5px;
-    background: greenyellow;
+    background: lightskyblue;
     border: solid 3px #4b4b4b;
     border-radius: 10px 10px 10px 10px;
 }
