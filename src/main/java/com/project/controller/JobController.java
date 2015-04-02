@@ -26,7 +26,7 @@ public class JobController {
     }
 
     @RequestMapping(value = "/byId", method = RequestMethod.GET)
-    public ModelAndView get(@RequestParam(value = "jobId") Long jobId) {
+    public ModelAndView getJobById(@RequestParam(value = "jobId") Long jobId) {
         try {
             Job job = jobService.get(jobId);
             ModelAndView modelAndView = new ModelAndView("public/job_obtions");

@@ -14,6 +14,7 @@
     background: lightskyblue;
     border: solid 3px #4b4b4b;
     border-radius: 10px 10px 10px 10px;
+    font-size: smaller;
 }
     .plainText {
         font-size: smaller;

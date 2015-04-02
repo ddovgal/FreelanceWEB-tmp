@@ -1,23 +1,16 @@
 package com.project.controller;
 
 import com.project.businesslogic.Job;
-import com.project.businesslogic.user.CustomerUser;
 import com.project.dao.CustomerUserDAO;
 import com.project.dao.UserDAO;
 import com.project.services.JobService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.io.IOException;
 import java.security.Principal;
 import java.util.Collection;
 import java.util.List;
@@ -71,19 +64,6 @@ public class BasicController {
             modelAndView = new ModelAndView("private/admin/profile");
         }
         return modelAndView;
-    }
-
-
-
-    //not my code - from SteakOverFlow
-    @RequestMapping(value = "/image/{userId}", produces = MediaType.IMAGE_JPEG_VALUE)
-    public ResponseEntity<byte[]> getImage(@PathVariable("userId") Long userId) throws IOException {
-
-        CustomerUser customerUser = customerUserDAO.get(userId);
-        byte[] imageContent = customerUser.getImage();
-        final HttpHeaders headers = new HttpHeaders();
-        headers.setContentType(MediaType.IMAGE_JPEG);
-        return new ResponseEntity<byte[]>(imageContent, headers, HttpStatus.OK);
     }
 
     private boolean hasRole(String role) {

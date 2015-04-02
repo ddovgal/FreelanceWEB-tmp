@@ -29,7 +29,7 @@
             <div class="central-bar">
                 <div align="center" style="margin-bottom: 20px; font-size: 30px"><b>My current jobs</b></div>
                 <c:forEach items="${jobs}" var="job">
-                    <div class="jobItem" style="font-size: smaller; margin-left: 8px">
+                    <div class="jobItem">
                         <div style="background: rgb(58,58,58); color: white">
                             <p style="text-align: center;
                                 font-size: medium;
@@ -52,11 +52,11 @@
                 </c:forEach>
             </div>
             <div class="right-bar" align="center">
-                <img id="userLogo" src="${root}/image/${userId}" style="width: 175px;
-                height: 175px;
-                margin-top: 10px;
-                border: solid 3px #4b4b4b;
-                border-radius: 10px 10px 10px 10px;"/>
+                <img id="userLogo" src="${root}/usr/customer/image/${userId}" style="width: 175px;
+                                                                                     height: 175px;
+                                                                                     margin-top: 10px;
+                                                                                     border: solid 3px #4b4b4b;
+                                                                                     border-radius: 10px 10px 10px 10px;"/>
                 <div id="snf" style="margin-top: 20px; font-size: 15px"><b><sec:authentication property="principal.snf" /></b></div>
                 <div id="email" style="margin-top: 5px; font-size: 15px"><b><sec:authentication property="principal.email" /></b></div>
                 <div id="rating" style="margin-top: 5px; font-size: 15px"><b>Current rating: </b><sec:authentication property="principal.rating" /></div>
