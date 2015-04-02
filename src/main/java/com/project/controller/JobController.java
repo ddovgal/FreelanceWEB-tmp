@@ -1,14 +1,15 @@
 package com.project.controller;
 
 import com.project.businesslogic.Job;
-import com.project.security.CustomUserDetails;
+import com.project.businesslogic.user.User;
+import com.project.dao.DeveloperUserDAO;
+import com.project.dao.UserDAO;
 import com.project.services.JobService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.util.MultiValueMap;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.security.Principal;
@@ -19,18 +20,52 @@ import java.util.List;
 public class JobController {
 
     private JobService jobService;
+    private DeveloperUserDAO developerUserDAO;
+    private UserDAO userDAO;
 
     @Autowired
     public void setJobService(JobService jobService) {
         this.jobService = jobService;
     }
 
-    @RequestMapping(value = "/byId", method = RequestMethod.GET)
-    public ModelAndView get(@RequestParam(value = "jobId") Long jobId) {
+    @Autowired
+    public void setDeveloperUserDAO(DeveloperUserDAO developerUserDAO) {
+        this.developerUserDAO = developerUserDAO;
+    }
+
+    @Autowired
+    public void setUserDAO(UserDAO userDAO) {
+        this.userDAO = userDAO;
+    }
+
+    @RequestMapping(value = "/options", method = RequestMethod.GET)
+    public ModelAndView get(Principal principal, @RequestParam(value = "jobId") Long jobId) {
         try {
             Job job = jobService.get(jobId);
             ModelAndView modelAndView = new ModelAndView("public/job_obtions");
             modelAndView.addObject("job", job);
+
+            if (principal != null) {
+                String email = principal.getName();
+
+                User user = userDAO.getByEmail(email);
+                switch (user.getUserType()) {
+                    case ADMIN: {
+                        modelAndView.addObject("isAdmin", true);
+                        break;
+                    }
+                    case CUSTOMER: {
+                        modelAndView.addObject("isCustomer", true);
+                        break;
+                    }
+                    case DEVELOPER: {
+                        modelAndView.addObject("isDeveloper", true);
+                        modelAndView.addObject("isApplicant", developerUserDAO.isApplicableForJob(jobId, email));
+                        modelAndView.addObject("isWorker", developerUserDAO.isWorkerOfJob(jobId, email));
+                        break;
+                    }
+                }
+            }
             return modelAndView;
         } catch (Exception e) {
             e.printStackTrace();
@@ -49,7 +84,7 @@ public class JobController {
         try {
             String[] tagsArr = null;
             if (tags != null && !tags.equals("")) {
-                tagsArr = tags.split("\\s");
+                tagsArr = tags.split("[\\s;]");
             }
 
             List<Job> jobs = jobService.getByCriterion(title, priceMin, priceMax, tagsArr, firstResult, maxResults);
@@ -66,18 +101,16 @@ public class JobController {
             ModelAndView modelAndView = new ModelAndView("public/error/error");
             modelAndView.addObject(e);
             return modelAndView;
-
         }
-
     }
 
-    @RequestMapping(value = "/byCustomer", method = RequestMethod.GET)
-    public ModelAndView getJobsByCustomer(Principal principal) {
-        long id = ((CustomUserDetails)principal).getId();
-        ModelAndView modelAndView = new ModelAndView("public/jobs");
-
-        return modelAndView;
-    }
+//    @RequestMapping(value = "/byCustomer", method = RequestMethod.GET)
+//    public ModelAndView getJobsByCustomer(Principal principal) {
+//        long id = ((CustomUserDetails)principal).getId();
+//        ModelAndView modelAndView = new ModelAndView("public/jobs");
+//
+//        return modelAndView;
+//    }
 
     @RequestMapping(value = "/newJob", method = RequestMethod.POST)
     public ModelAndView redirectToCreation() {
@@ -93,4 +126,33 @@ public class JobController {
         modelAndView.addObject("successMessage", "New job was successfully registered!");
         return modelAndView;
     }
+
+    @RequestMapping(value = "/add/applicant", method = RequestMethod.PUT)
+    @ResponseBody
+    public HttpStatus addApplicant(@RequestBody MultiValueMap<String,String> body) {
+        try {
+            Long jobId = Long.valueOf(body.getFirst("jobId"));
+            Long devId = Long.valueOf(body.getFirst("devId"));
+            jobService.addApplicant(jobId, devId);
+            return HttpStatus.OK;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return HttpStatus.NOT_ACCEPTABLE;
+        }
+    }
+
+    @RequestMapping(value = "/remove/applicant", method = RequestMethod.PUT)
+    @ResponseBody
+    public HttpStatus removeApplicant(@RequestBody MultiValueMap<String,String> body) {
+        try {
+            Long jobId = Long.valueOf(body.getFirst("jobId"));
+            Long devId = Long.valueOf(body.getFirst("devId"));
+            jobService.removeApplicant(jobId, devId);
+            return HttpStatus.OK;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return HttpStatus.NOT_ACCEPTABLE;
+        }
+    }
+
 }

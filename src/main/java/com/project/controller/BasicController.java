@@ -23,7 +23,7 @@ public class BasicController {
         ModelAndView modelAndView = null;
         if (hasRole("ROLE_DEVELOPER")) {
             System.out.println("Has role ROLE_DEVELOPER");
-            modelAndView = new ModelAndView("private/developer/profile");
+            modelAndView = new ModelAndView("redirect:/usr/developer/profile");
         }
         if (hasRole("ROLE_CUSTOMER")) {
             System.out.println("Has role ROLE_CUSTOMER");

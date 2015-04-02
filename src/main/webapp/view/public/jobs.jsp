@@ -53,7 +53,7 @@
                         <b>Tags: </b>${job.tags} <br><hr>
                         <b>Description: </b>${job.description}
                     </div>
-                    <form action="${root}/jobs/byId" method="get" style="margin-top: 10px; float: bottom">
+                    <form action="${root}/jobs/options" method="get" style="margin-top: 10px; float: bottom">
                         <div align="center">
                             <input type="hidden" name="jobId" value="${job.id}"/>
                             <button class="button_example" type="submit">See detail</button>
