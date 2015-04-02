@@ -41,7 +41,7 @@
         <div class="central-bar">
             <c:forEach items="${jobs}" var="job">
                 <div class="jobItem" style="font-size: smaller; margin-left: 8px">
-                    <div style="background: #000000; color: white">
+                    <div style="background: rgb(58,58,58); color: white">
                         <p style="text-align: center;
                                 font-size: medium;
                                 margin-top: auto;"><b>${job.title}</b></p>
@@ -53,12 +53,12 @@
                         <b>Tags: </b>${job.tags} <br><hr>
                         <b>Description: </b>${job.description}
                     </div>
-                    <form action="${root}/jobs/byId" method="get" style="margin-top: 10px; float: bottom">
-                        <div align="center">
+                    <div align="center" style="margin-top: 10px">
+                        <form action="${root}/jobs/byId" method="get">
                             <input type="hidden" name="jobId" value="${job.id}"/>
                             <button class="button_example" type="submit">See detail</button>
-                        </div>
-                    </form>
+                        </form>
+                    </div>
                 </div>
             </c:forEach>
         </div>

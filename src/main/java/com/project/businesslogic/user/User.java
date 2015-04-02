@@ -34,7 +34,7 @@ public class User {
     private double rating;
 
     @Lob
-    private String image;
+    private byte[] image;
 
     public long getId() {
         return id;
@@ -44,11 +44,11 @@ public class User {
         this.id = id;
     }
 
-    public String getImage() {
+    public byte[] getImage() {
         return image;
     }
 
-    public void setImage(String image) {
+    public void setImage(byte[] image) {
         this.image = image;
     }
 

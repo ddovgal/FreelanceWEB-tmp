@@ -38,4 +38,10 @@ public class CustomerUserController {
         }
     }
 
+    @RequestMapping(value = "/messages", method = RequestMethod.POST)
+    public ModelAndView redirectToMessages() {
+        ModelAndView modelAndView = new ModelAndView("private/customer/messages");
+        return modelAndView;
+    }
+
 }
