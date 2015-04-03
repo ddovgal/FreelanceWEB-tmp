@@ -1,6 +1,7 @@
 package com.project.dao;
 
 import com.project.businesslogic.user.CustomerUser;
+import com.project.businesslogic.user.DeveloperUser;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,13 @@ public class CustomerUserDAO implements CRUD<CustomerUser> {
     public CustomerUser get(long id) {
         Session session = sessionFactory.getCurrentSession();
         return (CustomerUser) session.get(CustomerUser.class, id);
+    }
+
+    @Transactional(readOnly = true)
+    public CustomerUser getByEmail(String email) {
+        Session session = sessionFactory.getCurrentSession();
+        return (CustomerUser) session.createQuery("from CustomerUser d where d.email = :email")
+                .setParameter("email", email).uniqueResult();
     }
 
     @Override

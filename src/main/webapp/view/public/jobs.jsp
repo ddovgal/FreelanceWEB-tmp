@@ -54,7 +54,7 @@
                         <b>Description: </b>${job.description}
                     </div>
                     <div align="center" style="margin-top: 10px">
-                        <form action="${root}/jobs/byId" method="get">
+                        <form action="${root}/jobs/options" method="get">
                             <input type="hidden" name="jobId" value="${job.id}"/>
                             <button class="button_example" type="submit">See detail</button>
                         </form>

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <c:set var="root" value="${pageContext.request.contextPath}" />
 <head>
-    <title>Job register success</title>
+    <title>Register was successful</title>
 </head>
 <body>
 <div class="wrapper">

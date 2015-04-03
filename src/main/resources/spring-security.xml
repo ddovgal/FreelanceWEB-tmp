@@ -11,6 +11,7 @@
         <intercept-url pattern='/p-redirect' access='ROLE_DEVELOPER, ROLE_CUSTOMER, ROLE_ADMIN' />
         <intercept-url pattern='/view/private/admin' access='ROLE_ADMIN' />
         <intercept-url pattern='/view/private/developer' access='ROLE_DEVELOPER' />
+        <intercept-url pattern='/profile' access='ROLE_DEVELOPER' />
         <intercept-url pattern='/view/private/customer' access='ROLE_CUSTOMER' />
         <form-login
                 login-page="/view/public/sign_in.jsp"

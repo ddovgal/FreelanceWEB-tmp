@@ -89,11 +89,47 @@ public class JobDAO implements CRUD<Job> {
         return criteria.list();
     }
 
+    /**
+     * @return all subscribed jobs by developer with this identifier
+     */
+    @Transactional(readOnly = true)
+    public List<Job> getByApplicant(long id, Integer firstResult, Integer maxResults) {
+        Session session = sessionFactory.getCurrentSession();
+        Criteria criteria = session.createCriteria(Job.class, "j");
+        criteria.createAlias("j.applicants", "appl");
+//        criteria.createAlias("j.developerUser", "dev");
+//        criteria.add(Restrictions.or(Restrictions.isNull("j.developerUser"), Restrictions.not(Restrictions.eq("dev.id", id))));
+        criteria.add(Restrictions.eq("appl.id", id));
+
+
+        if (firstResult != null)
+            criteria.setFirstResult(firstResult);
+        if (maxResults != null)
+            criteria.setMaxResults(maxResults);
+        return criteria.list();
+    }
+
+    /**
+     * @return all jobs by worker with this identifier
+     */
+    @Transactional(readOnly = true)
+    public List<Job> getByWorker(long id, Integer firstResult, Integer maxResults) {
+        Session session = sessionFactory.getCurrentSession();
+        Criteria criteria = session.createCriteria(Job.class, "j");
+        criteria.createAlias("j.developerUser", "worker");
+        criteria.add(Restrictions.eq("worker.id", id));
+
+        if (firstResult != null)
+            criteria.setFirstResult(firstResult);
+        if (maxResults != null)
+            criteria.setMaxResults(maxResults);
+        return criteria.list();
+    }
 
     @Override
     public void update(Job object) {
         Session session = sessionFactory.getCurrentSession();
-        session.merge(object);
+        session.saveOrUpdate(object);
     }
 
     @Override

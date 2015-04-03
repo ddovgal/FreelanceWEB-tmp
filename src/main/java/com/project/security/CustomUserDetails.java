@@ -13,17 +13,13 @@ public class CustomUserDetails implements UserDetails {
     private String snf;
     private String password;
     private String email;
-    private double rating;
-    private Date birthday;
 
-    public CustomUserDetails(Collection<? extends GrantedAuthority> authorities, long id, String password, String snf, String email, double rating, Date birthday) {
+    public CustomUserDetails(Collection<? extends GrantedAuthority> authorities, long id, String password, String snf, String email) {
         this.authorities = authorities;
         this.id = id;
         this.password = password;
         this.snf = snf;
         this.email = email;
-        this.rating = rating;
-        this.birthday = birthday;
     }
 
 
@@ -113,19 +109,4 @@ public class CustomUserDetails implements UserDetails {
         this.email = email;
     }
 
-    public double getRating() {
-        return rating;
-    }
-
-    public void setRating(double rating) {
-        this.rating = rating;
-    }
-
-    public Date getBirthday() {
-        return birthday;
-    }
-
-    public void setBirthday(Date birthday) {
-        this.birthday = birthday;
-    }
 }

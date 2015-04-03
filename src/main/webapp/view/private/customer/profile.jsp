@@ -1,7 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <c:set var="root" value="${pageContext.request.contextPath}" />
-<c:set var="isUserSessionOpened" value="<%=SecurityContextHolder.getContext().getAuthentication().getPrincipal() instanceof CustomUserDetails %>"/>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -43,7 +42,7 @@
                             <b>Description: </b>${job.description}
                         </div>
                         <div align="center" style="margin-top: 10px; margin-bottom: 10px">
-                            <form action="${root}/jobs/byId" method="get">
+                            <form action="${root}/jobs/options" method="get">
                                 <input type="hidden" name="jobId" value="${job.id}"/>
                                 <button class="button_example" type="submit">See detail</button>
                             </form>
@@ -57,10 +56,10 @@
                                                                                      margin-top: 10px;
                                                                                      border: solid 3px #4b4b4b;
                                                                                      border-radius: 10px 10px 10px 10px;"/>
-                <div id="snf" style="margin-top: 20px; font-size: 15px"><b><sec:authentication property="principal.snf" /></b></div>
-                <div id="email" style="margin-top: 5px; font-size: 15px"><b><sec:authentication property="principal.email" /></b></div>
-                <div id="rating" style="margin-top: 5px; font-size: 15px"><b>Current rating: </b><sec:authentication property="principal.rating" /></div>
-                <div id="birthday" style="margin-top: 5px; font-size: 15px"><b><sec:authentication property="principal.birthday" /></b></div>
+                <div id="snf" style="margin-top: 20px; font-size: 15px"><b>${customerUser.snf}</b></div>
+                <div id="email" style="margin-top: 5px; font-size: 15px"><b>${customerUser.email}</b></div>
+                <div id="rating" style="margin-top: 5px; font-size: 15px"><b>Current rating: </b>${customerUser.rating}</div>
+                <div id="birthday" style="margin-top: 5px; font-size: 15px"><b>${customerUser.birthday}</b></div>
                 <form id="edit-profile-button-form" action="" method="post">
                     <input class="coolButton" name="submit" size="60" value="Edit my profile" type="submit" style="margin-top: 40px">
                 </form>

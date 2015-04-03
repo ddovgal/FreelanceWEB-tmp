@@ -1,8 +1,10 @@
 package com.project.controller;
 
+import com.project.businesslogic.Job;
 import com.project.businesslogic.meta.UserType;
 import com.project.businesslogic.user.CustomerUser;
 import com.project.dao.CustomerUserDAO;
+import com.project.services.JobService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -15,15 +17,23 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
+import java.security.Principal;
+import java.util.List;
 
 @Controller
 @RequestMapping("/usr/customer")
 public class CustomerUserController {
 
     private CustomerUserDAO customerUserDAO;
+    private JobService jobService;
 
     @Autowired
-    public void setCustomerUserDAO(CustomerUserDAO customerUserDAO) {
+    public void setJobService(JobService jobService) {
+        this.jobService = jobService;
+    }
+
+    @Autowired
+     public void setCustomerUserDAO(CustomerUserDAO customerUserDAO) {
         this.customerUserDAO = customerUserDAO;
     }
 
@@ -40,6 +50,25 @@ public class CustomerUserController {
             e.printStackTrace();
             ModelAndView modelAndView =  new ModelAndView("public/customer_register");
             modelAndView.addObject("error", "Your attempt to register has failed! Please try again");
+            return modelAndView;
+        }
+    }
+
+    @RequestMapping(value = "/profile", method = RequestMethod.GET)
+    public ModelAndView developerUserProfile(Principal principal) {
+        try {
+            String email = principal.getName();
+            CustomerUser customerUser = customerUserDAO.getByEmail(email);
+            long userId = customerUser.getId();
+            List<Job> jobs = jobService.getByCustomerId(userId, 0, 20);
+            ModelAndView modelAndView = new ModelAndView("private/customer/profile");
+            modelAndView.addObject("jobs", jobs);
+            modelAndView.addObject("userId", userId);
+            modelAndView.addObject("customerUser", customerUser);
+            return modelAndView;
+        } catch (Exception e) {
+            e.printStackTrace();
+            ModelAndView modelAndView = new ModelAndView("public/error/error");
             return modelAndView;
         }
     }
