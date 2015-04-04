@@ -11,7 +11,7 @@
         <%@ include file="/view/public/common/header.jsp" %>
 
         <div class="content">
-            <h1 class="pageTitle">Home page</h1>
+            <h1 class="pageTitle" align="center" style="margin-top: 40px">Home page of Free Coin freelance system</h1>
             <p></p>
         </div>
 

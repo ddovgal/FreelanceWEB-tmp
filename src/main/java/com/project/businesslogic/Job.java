@@ -40,11 +40,11 @@ public class Job {
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private CustomerUser customerUser;
-    
+
     @ManyToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     @JoinTable(name = "job_applicant",
-            joinColumns = @JoinColumn(name = "applicant_id"),
-            inverseJoinColumns = @JoinColumn(name = "job_id"))
+            inverseJoinColumns = @JoinColumn(name = "applicant_id"),
+            joinColumns = @JoinColumn(name = "job_id"))
     private List<DeveloperUser> applicants;
 
 

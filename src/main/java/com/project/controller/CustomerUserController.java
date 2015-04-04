@@ -33,7 +33,7 @@ public class CustomerUserController {
     }
 
     @Autowired
-     public void setCustomerUserDAO(CustomerUserDAO customerUserDAO) {
+    public void setCustomerUserDAO(CustomerUserDAO customerUserDAO) {
         this.customerUserDAO = customerUserDAO;
     }
 
@@ -44,6 +44,7 @@ public class CustomerUserController {
         try {
             long id = customerUserDAO.create(customerUser);
             ModelAndView modelAndView =  new ModelAndView("public/success/on_register_success");
+            modelAndView.addObject("titleMessage", "Customer register success");
             modelAndView.addObject("successMessage", "Customer user was successfully registered!");
             return modelAndView;
         } catch (Exception e) {
@@ -73,10 +74,16 @@ public class CustomerUserController {
         }
     }
 
-    @RequestMapping(value = "/messages", method = RequestMethod.POST)
+    @RequestMapping(value = "/messages", method = RequestMethod.GET)
     public ModelAndView redirectToMessages() {
-        ModelAndView modelAndView = new ModelAndView("private/customer/messages");
-        return modelAndView;
+        try {
+            ModelAndView modelAndView = new ModelAndView("private/customer/messages");
+            return modelAndView;
+        } catch (Exception e) {
+            e.printStackTrace();
+            ModelAndView modelAndView = new ModelAndView("public/error/error");
+            return modelAndView;
+        }
     }
 
     //not my code - from SteakOverFlow
@@ -85,6 +92,7 @@ public class CustomerUserController {
 
         CustomerUser customerUser = customerUserDAO.get(userId);
         byte[] imageContent = customerUser.getImage();
+        if (imageContent==null) imageContent = customerUserDAO.getDefaultUser().getImage();
         final HttpHeaders headers = new HttpHeaders();
         //headers.setContentType(MediaType.IMAGE_JPEG);
         return new ResponseEntity<byte[]>(imageContent, headers, HttpStatus.OK);

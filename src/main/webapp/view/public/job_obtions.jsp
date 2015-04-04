@@ -27,7 +27,7 @@
                         function cancelApplianceForJobRequest(devId, jobId) {
                             $.ajax({
                                 type: 'PUT',
-                                url: '${root}/jobs/remove/applicant',
+                                url: '/FreeCoin/jobs/remove/applicant',
                                 data: { devId: devId,
                                     jobId: jobId }
                             });
@@ -47,7 +47,7 @@
                         function applyForJobRequest(devId, jobId) {
                             $.ajax({
                                 type: 'PUT',
-                                url: '${root}/jobs/add/applicant',
+                                url: '/FreeCoin/jobs/add/applicant',
                                 data: { devId: devId,
                                     jobId: jobId }
                             });
@@ -70,28 +70,24 @@
                 <%--some logic for customer--%>
                 <c:forEach items="${applicants}" var="applicant">
                     <div class="applicantItem">
-                        <img id="userLogo" src="${root}/usr/developer/image/${userId}" style="width: 50px;
-                                                                                     height: 50px;
+                        <img align="left" id="userLogo" src="${root}/usr/developer/image/${applicant.id}" style="width: 75px;
+                                                                                     height: 75px;
                                                                                      border: solid 2px #4b4b4b;
                                                                                      border-radius: 5px 5px 5px 5px;"/>
-                        <table style="color: #000000">
+                        <p style="margin-top: 0px"><table style="color: #000000; padding-left: 10px; font-size: 15px">
                             <tr>
                                 <td><b>${applicant.snf}</b></td>
                             </tr>
                             <tr>
-                                <td><b>His current rating: ${applicant.rating}</b></td>
+                                <td><b>His rating: ${applicant.rating}</b></td>
                             </tr>
-                            <tr>
-                                <div align="center" style="margin-top: 5px">
-                                    <td><button id="acceptHim"  class="button_example" type="submit" >Chose him</button></td>
-                                </div>
-                            </tr>
-                        </table>
+                        </table></p>
+                        <div align="center" style="margin-top: 5px"><button id="acceptHim"  class="button_example" type="submit" >Chose him</button></div>
                     </div>
                 </c:forEach>
             </c:if>
         </div>
-        <div class="central-bar">
+        <div class="central-bar" style="margin-left: 15px">
             <h3>${job.title}</h3>
             Price: ${job.price} <br>
             Publish date: ${job.publishTime} <br>
@@ -111,7 +107,6 @@
             <c:if test="${isCustomer}">
                 <%--some logic for customer--%>
             </c:if>
-
         </div>
     </div>
 

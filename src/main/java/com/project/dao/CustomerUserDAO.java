@@ -2,6 +2,7 @@ package com.project.dao;
 
 import com.project.businesslogic.user.CustomerUser;
 import com.project.businesslogic.user.DeveloperUser;
+import com.project.businesslogic.user.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,5 +51,13 @@ public class CustomerUserDAO implements CRUD<CustomerUser> {
     public void delete(CustomerUser object) {
         Session session = sessionFactory.getCurrentSession();
         session.delete(object);
+    }
+
+    //get default user with id 1, for getting his default image
+    @Transactional(readOnly = true) //TODO: change to search by id
+    public User getDefaultUser(){
+        Session session = sessionFactory.getCurrentSession();
+        return (User) session.createQuery("from User d where d.email = :email")
+                .setParameter("email", "\"^_default$Email").uniqueResult();
     }
 }

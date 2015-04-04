@@ -27,7 +27,7 @@
                         </tr>
                         <tr>
                             <td>Price:</td><td style="font-size: smaller">min<input id="searchMinRating" class="price" type="text" name="priceMin">
-                                              max<input id="searchMaxRating" class="price" type="text" name="priceMax"></td>
+                            max<input id="searchMaxRating" class="price" type="text" name="priceMax"></td>
                         </tr>
                         <tr>
                             <div align="center" style="margin-top: 5px">

@@ -48,7 +48,7 @@
                             font-weight: bold;
                             text-shadow: 0 -1px 1px #222;
                             font-family:Verdana, Geneva, sans-serif;"
-                    onclick="javascript:formSubmit()"><p style="margin-top: 5px">Logout</p></button>
+                    onclick="javascript:formSubmit()"><p>Logout</p></button>
             <c:url value="/j_spring_security_logout" var="logoutUrl" />
             <!-- csrt for log out-->
             <form id="logoutForm" action="${logoutUrl}" method="post" >

@@ -10,8 +10,8 @@
     border: solid 3px #4b4b4b;
     border-radius: 10px 10px 10px 10px;
     margin-top: 10px;
-    margin-left: 10px;
-    margin-bottom: 10px;
+    padding: 10px;
+
 }
 
 .jobItem {
@@ -27,8 +27,8 @@
     border-radius: 10px 10px 10px 10px;
     font-size: smaller;
 }
-    .plainText {
-        font-size: smaller;
-        margin: 0 auto;
-        font-family: "Lucida Grande", "Lucida Sans Unicode", Tahoma, Sans-Serif;
-    }
+.plainText {
+    font-size: smaller;
+    margin: 0 auto;
+    font-family: "Lucida Grande", "Lucida Sans Unicode", Tahoma, Sans-Serif;
+}

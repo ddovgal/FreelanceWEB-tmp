@@ -8,6 +8,7 @@ import com.project.services.JobService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -38,11 +39,12 @@ public class JobController {
         this.userDAO = userDAO;
     }
 
+    @Transactional //need it, or don't need, a Grisha ?)
     @RequestMapping(value = "/options", method = RequestMethod.GET)
     public ModelAndView get(Principal principal, @RequestParam(value = "jobId") Long jobId) {
         try {
             Job job = jobService.get(jobId);
-            ModelAndView modelAndView = new ModelAndView("public/job_options");
+            ModelAndView modelAndView = new ModelAndView("public/job_obtions");
             modelAndView.addObject("job", job);
 
             if (principal != null) {
@@ -114,7 +116,7 @@ public class JobController {
 //        return modelAndView;
 //    }
 
-    @RequestMapping(value = "/newJob", method = RequestMethod.POST)
+    @RequestMapping(value = "/newJob", method = RequestMethod.GET)
     public ModelAndView redirectToCreation() {
         ModelAndView modelAndView = new ModelAndView("private/customer/job_register");
         return modelAndView;
@@ -125,6 +127,7 @@ public class JobController {
         long id = jobService.create(job, customerId);
 
         ModelAndView modelAndView = new ModelAndView("public/success/on_register_success");
+        modelAndView.addObject("titleMessage", "Job register success");
         modelAndView.addObject("successMessage", "New job was successfully registered!");
         return modelAndView;
     }

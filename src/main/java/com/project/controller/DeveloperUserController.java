@@ -44,6 +44,7 @@ public class DeveloperUserController {
         try {
             long id = developerUserDAO.create(developerUser);
             ModelAndView modelAndView =  new ModelAndView("public/success/on_register_success");
+            modelAndView.addObject("titleMessage", "Developer register success");
             modelAndView.addObject("successMessage", "Developer user was successfully registered!");
 
             return modelAndView;
@@ -77,12 +78,13 @@ public class DeveloperUserController {
         }
     }
 
-    //not my code - from StackOverFlow
+    //not my code - from SteakOverFlow
     @RequestMapping(value = "/image/{userId}"/*, produces = MediaType.IMAGE_JPEG_VALUE*/)
     public ResponseEntity<byte[]> getCustomerImage(@PathVariable("userId") Long userId) throws IOException {
 
         DeveloperUser developerUser = developerUserDAO.get(userId);
         byte[] imageContent = developerUser.getImage();
+        if (imageContent==null) imageContent = developerUserDAO.getDefaultUser().getImage();
         final HttpHeaders headers = new HttpHeaders();
         //headers.setContentType(MediaType.IMAGE_JPEG);
         return new ResponseEntity<byte[]>(imageContent, headers, HttpStatus.OK);

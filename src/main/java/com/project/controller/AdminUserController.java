@@ -2,7 +2,6 @@ package com.project.controller;
 
 import com.project.businesslogic.meta.UserType;
 import com.project.businesslogic.user.AdminUser;
-import com.project.businesslogic.user.DeveloperUser;
 import com.project.dao.AdminUserDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -29,6 +28,7 @@ public class AdminUserController {
         try {
             long id = adminUserDAO.create(adminUser);
             ModelAndView modelAndView =  new ModelAndView("public/success/on_register_success");
+            modelAndView.addObject("titleMessage", "Admin register success");
             modelAndView.addObject("successMessage", "Admin user was successfully registered!");
             return modelAndView;
         } catch (Exception e) {
