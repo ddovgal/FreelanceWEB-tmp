@@ -1,10 +1,7 @@
 package com.project.dao;
 
 import com.project.businesslogic.Job;
-import org.hibernate.Criteria;
-import org.hibernate.FlushMode;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
+import org.hibernate.*;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -34,7 +31,10 @@ public class JobDAO implements CRUD<Job> {
     @Transactional(readOnly = true)
     public Job get(long id) {
         Session session = sessionFactory.getCurrentSession();
-        return (Job) session.get(Job.class, id);
+        Criteria criteria = session.createCriteria(Job.class, "j");
+        criteria.add(Restrictions.eq("j.id", id));
+        criteria.setFetchMode("j.applicants", FetchMode.JOIN);
+        return (Job) criteria.uniqueResult();
     }
 
     @Transactional(readOnly = true)

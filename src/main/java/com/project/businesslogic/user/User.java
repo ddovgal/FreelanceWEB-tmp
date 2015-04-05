@@ -1,5 +1,6 @@
 package com.project.businesslogic.user;
 
+import com.project.businesslogic.Image;
 import com.project.businesslogic.meta.UserType;
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -33,8 +34,8 @@ public class User {
 
     private double rating;
 
-    @Lob
-    private byte[] image;
+    @ManyToOne(cascade = CascadeType.ALL)
+    private Image image;
 
     public long getId() {
         return id;
@@ -44,11 +45,11 @@ public class User {
         this.id = id;
     }
 
-    public byte[] getImage() {
+    public Image getImage() {
         return image;
     }
 
-    public void setImage(byte[] image) {
+    public void setImage(Image image) {
         this.image = image;
     }
 
@@ -112,5 +113,22 @@ public class User {
                 ", rating=" + rating +
                 ", image='" + image + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        User user = (User) o;
+
+        if (id != user.id) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return (int) (id ^ (id >>> 32));
     }
 }

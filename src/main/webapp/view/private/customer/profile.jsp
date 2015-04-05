@@ -51,7 +51,7 @@
             </c:forEach>
         </div>
         <div class="right-bar" align="center">
-            <img id="userLogo" src="${root}/usr/customer/image/${userId}" style="width: 175px;
+            <img id="userLogo" src="${root}/user/image/${userId}" style="width: 175px;
                                                                                      height: 175px;
                                                                                      margin-top: 10px;
                                                                                      border: solid 3px #4b4b4b;

@@ -1,6 +1,7 @@
 package com.project.controller;
 
 import com.project.businesslogic.Job;
+import com.project.businesslogic.user.DeveloperUser;
 import com.project.businesslogic.user.User;
 import com.project.dao.DeveloperUserDAO;
 import com.project.dao.UserDAO;
@@ -39,7 +40,7 @@ public class JobController {
         this.userDAO = userDAO;
     }
 
-    @Transactional //need it, or don't need, a Grisha ?)
+    @Transactional
     @RequestMapping(value = "/options", method = RequestMethod.GET)
     public ModelAndView get(Principal principal, @RequestParam(value = "jobId") Long jobId) {
         try {
@@ -59,7 +60,12 @@ public class JobController {
                     case CUSTOMER: {
                         modelAndView.addObject("isCustomer", true);
                         modelAndView.addObject("jobId", job.getId());
-                        modelAndView.addObject("applicants", job.getApplicants());
+                        List<DeveloperUser> appl = job.getApplicants();
+                        modelAndView.addObject("applicants", appl);
+                        for (DeveloperUser d : appl) {
+                            System.out.println(appl);
+                        }
+
                         break;
                     }
                     case DEVELOPER: {

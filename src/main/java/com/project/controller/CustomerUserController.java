@@ -86,16 +86,4 @@ public class CustomerUserController {
         }
     }
 
-    //not my code - from SteakOverFlow
-    @RequestMapping(value = "/image/{userId}"/*, produces = MediaType.IMAGE_JPEG_VALUE*/)
-    public ResponseEntity<byte[]> getCustomerImage(@PathVariable("userId") Long userId) throws IOException {
-
-        CustomerUser customerUser = customerUserDAO.get(userId);
-        byte[] imageContent = customerUser.getImage();
-        if (imageContent==null) imageContent = customerUserDAO.getDefaultUser().getImage();
-        final HttpHeaders headers = new HttpHeaders();
-        //headers.setContentType(MediaType.IMAGE_JPEG);
-        return new ResponseEntity<byte[]>(imageContent, headers, HttpStatus.OK);
-    }
-
 }

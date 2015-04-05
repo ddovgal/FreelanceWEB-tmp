@@ -131,6 +131,16 @@
           <artifactId>servlet-api</artifactId>
           <version>2.5</version>
       </dependency>
+      <!--&lt;!&ndash;<dependency>&ndash;&gt;-->
+          <!--&lt;!&ndash;<groupId>javax</groupId>&ndash;&gt;-->
+          <!--&lt;!&ndash;<artifactId>javaee-api</artifactId>&ndash;&gt;-->
+          <!--&lt;!&ndash;<version>6.0</version>&ndash;&gt;-->
+      <!--&lt;!&ndash;</dependency>&ndash;&gt;-->
+      <!--<dependency>-->
+          <!--<groupId>javax.servlet</groupId>-->
+          <!--<artifactId>javax.servlet-api</artifactId>-->
+          <!--<version>3.1.0</version>-->
+      <!--</dependency>-->
 
   </dependencies>
   <build>
@@ -162,7 +172,7 @@
               <artifactId>tomcat7-maven-plugin</artifactId>
               <version>2.2</version>
               <configuration>
-                  <port>8080</port>
+                  <port>8083</port>
               </configuration>
           </plugin>
           

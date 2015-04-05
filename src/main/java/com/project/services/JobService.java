@@ -46,7 +46,9 @@ public class JobService {
 
     @Transactional(readOnly = true)
     public Job get(long id) {
-        return jobDAO.get(id);
+        Job job = jobDAO.get(id);
+        job.getApplicants();
+        return job;
     }
 
     @Transactional(readOnly = true)
