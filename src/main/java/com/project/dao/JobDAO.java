@@ -2,7 +2,6 @@ package com.project.dao;
 
 import com.project.businesslogic.Job;
 import org.hibernate.Criteria;
-import org.hibernate.FlushMode;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -127,6 +126,11 @@ public class JobDAO implements CRUD<Job> {
         return criteria.list();
     }
 
+    /*@Transactional(readOnly = true)
+    public boolean isOpen(long id) {
+        Session session = sessionFactory.getCurrentSession();
+        return ((Job) session.get(Job.class, id)).getDeveloperUser()==null;
+    }*/
 
     @Override
     public void update(Job object) {

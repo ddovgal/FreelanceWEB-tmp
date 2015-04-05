@@ -11,6 +11,6 @@
     <title>Error page</title>
 </head>
 <body>
-
+  <div align="center" style="margin-top: 100px; font-size: xx-large">Something gone wrong</div>
 </body>
 </html>

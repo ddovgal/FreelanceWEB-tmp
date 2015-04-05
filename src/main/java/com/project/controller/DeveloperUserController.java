@@ -37,6 +37,12 @@ public class DeveloperUserController {
         this.jobService = jobService;
     }
 
+    @RequestMapping(value = "/profileDetail", method = RequestMethod.GET)
+    public ModelAndView redirectToProfileDetail() {
+        ModelAndView modelAndView = new ModelAndView("private/customer/profile_detail");
+        return modelAndView;
+    }
+
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public ModelAndView create(@ModelAttribute DeveloperUser developerUser) {
         developerUser.setUserType(UserType.DEVELOPER);

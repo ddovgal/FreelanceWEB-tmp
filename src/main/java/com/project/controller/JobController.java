@@ -58,7 +58,8 @@ public class JobController {
                     }
                     case CUSTOMER: {
                         modelAndView.addObject("isCustomer", true);
-                        modelAndView.addObject("jobId", job.getId());
+                        modelAndView.addObject("isOpen", job.getDeveloperUser()==null);
+                        modelAndView.addObject("isMine", job.getCustomerUser().getId()==user.getId());
                         modelAndView.addObject("applicants", job.getApplicants());
                         break;
                     }
@@ -119,17 +120,85 @@ public class JobController {
     @RequestMapping(value = "/newJob", method = RequestMethod.GET)
     public ModelAndView redirectToCreation() {
         ModelAndView modelAndView = new ModelAndView("private/customer/job_register");
+        modelAndView.addObject("isToCreate", true);
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/editJob", method = RequestMethod.GET)
+    public ModelAndView redirectToEdit(@RequestParam(value = "jobId") Long jobId) {
+        ModelAndView modelAndView = new ModelAndView("private/customer/job_register");
+        Job job = jobService.get(jobId);
+        modelAndView.addObject("isToCreate", false);
+        modelAndView.addObject("jobObj", job);
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/deleteJob", method = RequestMethod.POST)
+    @ResponseBody
+    public ModelAndView deleteJob(@RequestBody MultiValueMap<String,String> body) {
+        Long jobId = Long.valueOf(body.getFirst("jobId"));
+        Job job = jobService.get(jobId);
+        job.setCustomerUser(null);
+        job.setDeveloperUser(null);
+        job.setApplicants(null);
+        jobService.delete(job);
+
+        ModelAndView modelAndView = new ModelAndView("public/success/on_register_success");
+        modelAndView.addObject("titleMessage", "Job delete success");
+        modelAndView.addObject("successMessage", "Job was successfully deleted!");
         return modelAndView;
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
-    public ModelAndView createJob(@ModelAttribute("job") Job job, @RequestParam("customerId") Integer customerId) {
-        long id = jobService.create(job, customerId);
-
+    public ModelAndView createJob(@ModelAttribute("job") Job job,
+                                  @RequestParam(value = "customerId") Long customerId,
+                                  @RequestParam(value = "isToCreate") boolean isToCreate,
+                                  @RequestParam(value = "lastId") Long lastId) {
         ModelAndView modelAndView = new ModelAndView("public/success/on_register_success");
-        modelAndView.addObject("titleMessage", "Job register success");
-        modelAndView.addObject("successMessage", "New job was successfully registered!");
+        if (isToCreate){
+            long id = jobService.create(job, customerId);
+
+            modelAndView.addObject("titleMessage", "Job register success");
+            modelAndView.addObject("successMessage", "New job was successfully registered!");
+        } else {
+            jobService.realUpdate(lastId, job);
+
+            modelAndView.addObject("titleMessage", "Job edit success");
+            modelAndView.addObject("successMessage", "Job was successfully edited!");
+        }
         return modelAndView;
+    }
+
+    @RequestMapping(value = "/add/developer", method = RequestMethod.POST)
+    @ResponseBody
+    public ModelAndView addDeveloper(@RequestParam Long jobId, @RequestParam Long developerId) {
+        try {
+            jobService.addDeveloper(jobId, developerId);
+            ModelAndView modelAndView = new ModelAndView("public/success/on_register_success");
+            modelAndView.addObject("titleMessage", "Applicant accept");
+            modelAndView.addObject("successMessage", "Applicant was successfully chosen for this job");
+            return modelAndView;
+        } catch (Exception e) {
+            e.printStackTrace();
+            ModelAndView modelAndView = new ModelAndView("public/error/error");
+            return modelAndView;
+        }
+    }
+
+    @RequestMapping(value = "/remove/developer", method = RequestMethod.POST)
+    @ResponseBody
+    public ModelAndView removeDeveloper(@RequestParam Long jobId, @RequestParam Long developerId) {
+        try {
+            jobService.removeDeveloper(jobId, developerId);
+            ModelAndView modelAndView = new ModelAndView("public/success/on_register_success");
+            modelAndView.addObject("titleMessage", "Developer dismissed");
+            modelAndView.addObject("successMessage", "This bad developer was successfully dismissed");
+            return modelAndView;
+        } catch (Exception e) {
+            e.printStackTrace();
+            ModelAndView modelAndView = new ModelAndView("public/error/error");
+            return modelAndView;
+        }
     }
 
     @RequestMapping(value = "/add/applicant", method = RequestMethod.PUT)

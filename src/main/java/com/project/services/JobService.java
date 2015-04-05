@@ -36,7 +36,7 @@ public class JobService {
         this.developerUserDAO = developerUserDAO;
     }
 
-    public long create(Job object, Integer customerId) {
+    public long create(Job object, Long customerId) {
         CustomerUser customerUser = customerUserDAO.get(customerId);
         object.setCustomerUser(customerUser);
         //setting publish time
@@ -70,6 +70,21 @@ public class JobService {
         return jobDAO.getByWorker(id, firstResult, maxResults);
     }
 
+    public void addDeveloper(long jobId, long devId) {
+        DeveloperUser developerUser = developerUserDAO.get(devId);
+        Job job = jobDAO.get(jobId);
+        job.setDeveloperUser(developerUser);
+        jobDAO.update(job);
+    }
+
+    public void removeDeveloper(long jobId, long devId) {
+        DeveloperUser developerUser = developerUserDAO.get(devId);
+        developerUser.setRating(developerUser.getRating()-5);
+        Job job = jobDAO.get(jobId);
+        job.setDeveloperUser(null);
+        jobDAO.update(job);
+    }
+
     public void addApplicant(long jobId, long devId) {
         DeveloperUser developerUser = developerUserDAO.get(devId);
         Job job = jobDAO.get(jobId);
@@ -82,6 +97,16 @@ public class JobService {
         Job job = jobDAO.get(jobId);
         job.getApplicants().remove(developerUser);
         jobDAO.update(job);
+    }
+
+    public void realUpdate(Long realJobId, Job tmpJob){
+        Job realJob = jobDAO.get(realJobId);
+        realJob.setTitle(tmpJob.getTitle());
+        realJob.setTags(tmpJob.getTags());
+        realJob.setDescription(tmpJob.getDescription());
+        realJob.setPrice(tmpJob.getPrice());
+        realJob.setAgreement(tmpJob.getAgreement());
+        jobDAO.update(realJob);
     }
 
     public void update(Job object) {

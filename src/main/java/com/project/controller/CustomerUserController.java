@@ -4,16 +4,16 @@ import com.project.businesslogic.Job;
 import com.project.businesslogic.meta.UserType;
 import com.project.businesslogic.user.CustomerUser;
 import com.project.dao.CustomerUserDAO;
+import com.project.security.CustomUserDetails;
 import com.project.services.JobService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
@@ -35,6 +35,35 @@ public class CustomerUserController {
     @Autowired
     public void setCustomerUserDAO(CustomerUserDAO customerUserDAO) {
         this.customerUserDAO = customerUserDAO;
+    }
+
+    @RequestMapping(value = "/profileDetail", method = RequestMethod.GET)
+    public ModelAndView redirectToProfileDetail(@RequestParam(value = "userId") Long userId) {
+        ModelAndView modelAndView = new ModelAndView("private/customer/profile_detail");
+        CustomerUser customerUser = customerUserDAO.get(userId);
+        modelAndView.addObject("user", customerUser);
+        return modelAndView;
+    }
+
+    @RequestMapping(value = "/edit", method = RequestMethod.POST)
+    public ModelAndView edit(@ModelAttribute CustomerUser tmpUser,
+                             @RequestParam(value = "lastId") Long lastId,
+                             @RequestParam(value = "userImage") MultipartFile userImage,
+                             Principal principal) {
+        try {
+            if (userImage.getSize()!=0) tmpUser.setImage(userImage.getBytes());
+            CustomUserDetails customUserDetails = (CustomUserDetails) ((Authentication) principal).getPrincipal();
+            customerUserDAO.realUpdate(lastId, tmpUser, customUserDetails);
+
+            ModelAndView modelAndView =  new ModelAndView("public/success/on_register_success");
+            modelAndView.addObject("titleMessage", "Profile edit success");
+            modelAndView.addObject("successMessage", "Your profile was successfully edited!");
+            return modelAndView;
+        } catch (IOException e) {
+            e.printStackTrace();
+            ModelAndView modelAndView = new ModelAndView("public/error/error");
+            return modelAndView;
+        }
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)

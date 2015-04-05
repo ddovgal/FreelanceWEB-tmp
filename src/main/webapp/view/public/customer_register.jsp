@@ -37,7 +37,7 @@
         <div class="content">
             <h1 class="pageTitle">Customer sign up form</h1>
             <div class="container">
-                <div  class="form">
+                <div class="form">
                     <c:if test="${not empty error}">
                         Error: ${error}
                     </c:if>

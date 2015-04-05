@@ -1,3 +1,5 @@
+<%@ page import="com.project.businesslogic.Job" %>
+<%@ page import="java.text.SimpleDateFormat" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <c:set var="root" value="${pageContext.request.contextPath}" />
@@ -40,7 +42,7 @@
         </div>
         <div class="central-bar">
             <c:forEach items="${jobs}" var="job">
-                <div class="jobItem" style="font-size: smaller; margin-left: 8px">
+                <div class="jobItem">
                     <div style="background: rgb(58,58,58); color: white">
                         <p style="text-align: center;
                                 font-size: medium;
@@ -49,11 +51,16 @@
                     <div style="margin-left: 10px; margin-right: 10px">
                         <b>Price: </b>${job.price} <br>
                         <b>Publish date: </b>${job.publishTime} <br>
-                        <b>Deadline: </b>${job.deadline} <br>
-                        <b>Tags: </b>${job.tags} <br><hr>
+
+                        <%  Job job = (Job) pageContext.getAttribute("job");
+                            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                            String newFormatDeadline = sdf.format(job.getDeadline());
+                        %>
+                        <b>Deadline: </b><%=newFormatDeadline%><br>
+                        <b>Tags: </b>${job.tags}<br><hr>
                         <b>Description: </b>${job.description}
                     </div>
-                    <div align="center" style="margin-top: 10px">
+                    <div align="center" style="margin-top: 10px; margin-bottom: 10px">
                         <form action="${root}/jobs/options" method="get">
                             <input type="hidden" name="jobId" value="${job.id}"/>
                             <button class="button_example" type="submit">See detail</button>

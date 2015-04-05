@@ -1,3 +1,5 @@
+<%@ page import="com.project.businesslogic.Job" %>
+<%@ page import="java.text.SimpleDateFormat" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
@@ -9,6 +11,7 @@
     <link href="${root}/res/filter-form-style.css" rel="stylesheet" type="text/css" media="screen" />
     <link href="${root}/res/style.css" rel="stylesheet" type="text/css" media="screen" />
     <link href="${root}/res/item-style.css" rel="stylesheet" type="text/css" media="screen" />
+    <link href="${root}/res/form.css" rel="stylesheet" type="text/css" media="screen" />
 
     <script src="${root}/res/js/JQuery-1.10.2.js" ></script>
 </head>
@@ -68,35 +71,85 @@
             </c:if>
             <c:if test="${isCustomer}">
                 <%--some logic for customer--%>
-                <c:forEach items="${applicants}" var="applicant">
-                    <div class="applicantItem">
-                        <img align="left" id="userLogo" src="${root}/usr/developer/image/${applicant.id}" style="width: 75px;
+                <c:if test="${isMine}">
+                    <c:if test="${isOpen}">
+                        <c:forEach items="${applicants}" var="applicant">
+                            <div class="applicantItem">
+                                <img align="left" id="userLogo" src="${root}/usr/developer/image/${applicant.id}" style="width: 75px;
                                                                                      height: 75px;
                                                                                      border: solid 2px #4b4b4b;
                                                                                      border-radius: 5px 5px 5px 5px;"/>
-                        <p style="margin-top: 0px"><table style="color: #000000; padding-left: 10px; font-size: 15px">
-                            <tr>
-                                <td><b>${applicant.snf}</b></td>
-                            </tr>
-                            <tr>
-                                <td><b>His rating: ${applicant.rating}</b></td>
-                            </tr>
-                        </table></p>
-                        <div align="center" style="margin-top: 5px"><button id="acceptHim"  class="button_example" type="submit" >Chose him</button></div>
-                    </div>
-                </c:forEach>
+                                <p style="margin-top: 0px; font-size: 15px">
+                                <table style="color: #000000">
+                                    <tr>
+                                        <td style="padding-left: 10px"><b>${applicant.snf}</b></td>
+                                    </tr>
+                                    <tr>
+                                        <td style="padding-left: 10px"><b>His rating: ${applicant.rating}</b></td>
+                                    </tr>
+                                </table>
+                                </p>
+                                <div align="center" style="margin-top: 5px">
+                                    <form id="accept-button-form" action="${root}/jobs/add/developer" method="post">
+                                        <input class="button_example" value="Chose him" type="submit" style="margin-top: 10px">
+                                        <input type="hidden" value="${job.id}" name="jobId" />
+                                        <input type="hidden" value="${applicant.id}" name="developerId" />
+                                    </form>
+                                </div>
+                            </div>
+                        </c:forEach>
+                    </c:if>
+                    <c:if test="${!isOpen}">
+                        <div class="applicantItem">
+                            <img align="left" id="developerLogo" src="${root}/usr/developer/image/${job.developerUser.id}" style="width: 75px;
+                                                                                     height: 75px;
+                                                                                     border: solid 2px #4b4b4b;
+                                                                                     border-radius: 5px 5px 5px 5px;"/>
+                            <p style="margin-top: 0px; font-size: 15px">
+                            <table style="color: #000000">
+                                <tr>
+                                    <td style="padding-left: 10px"><b>${job.developerUser.snf}</b></td>
+                                </tr>
+                                <tr>
+                                    <td style="padding-left: 10px"><b>His rating: ${job.developerUser.rating}</b></td>
+                                </tr>
+                            </table>
+                            </p>
+                            <div align="center" style="margin-top: 5px">
+                                <form id="dismiss-button-form" action="${root}/jobs/remove/developer" method="post">
+                                    <input class="button_example" value="Dismiss him" type="submit" style="margin-top: 10px">
+                                    <input type="hidden" value="${job.id}" name="jobId" />
+                                    <input type="hidden" value="${job.developerUser.id}" name="developerId" />
+                                </form>
+                            </div>
+                        </div>
+                    </c:if>
+                </c:if>
             </c:if>
         </div>
         <div class="central-bar" style="margin-left: 15px">
-            <h3>${job.title}</h3>
-            Price: ${job.price} <br>
-            Publish date: ${job.publishTime} <br>
-            Deadline: ${job.deadline} <br>
-            Tags: ${job.tags} <br><hr>
-            Description: ${job.description} <br><hr>
-            Agreement: ${job.agreement}
+            <div style="font-size: larger; margin-left: 8px">
+                <div style="background: rgb(58,58,58); color: white; border-radius: 10px 10px 10px 10px">
+                    <p style="text-align: center;
+                                font-size: medium;
+                                margin-top: auto;"><b>${job.title}</b></p>
+                </div>
+                <div style="margin-left: 10px; margin-right: 10px; margin-top: 10px">
+                    <b>Price: </b>${job.price} <br>
+                    <b>Publish date: </b>${job.publishTime} <br>
+
+                    <%  Job job = (Job) request.getAttribute("job");
+                        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                        String newFormatDeadline = sdf.format(job.getDeadline());
+                    %>
+                    <b>Deadline: </b><%=newFormatDeadline%><br>
+                    <b>Tags: </b>${job.tags}<br><hr>
+                    <b>Description: </b>${job.description}<br><hr>
+                    <b>Agreement: </b>${job.agreement}
+                </div>
+            </div>
         </div>
-        <div class="right-bar">
+        <div class="right-bar" align="center">
 
             <c:if test="${isDeveloper}">
                 <%--some logic for developer--%>
@@ -106,6 +159,16 @@
             </c:if>
             <c:if test="${isCustomer}">
                 <%--some logic for customer--%>
+                <c:if test="${isMine}">
+                    <form id="edit-button-form" action="${root}/jobs/editJob" method="get">
+                        <input class="coolButton" size="60" value="Edit this job" type="submit" style="margin-top: 100px">
+                        <input type="hidden" value="${job.id}" name="jobId" />
+                    </form>
+                    <form id="delete-button-form" action="${root}/jobs/deleteJob" method="post">
+                        <input class="coolButton" size="60" value="Delete this job" type="submit" style="margin-top: 10px">
+                        <input type="hidden" value="${job.id}" name="jobId" />
+                    </form>
+                </c:if>
             </c:if>
         </div>
     </div>
