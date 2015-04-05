@@ -1,5 +1,6 @@
 package com.project.controller;
 
+import com.project.businesslogic.Image;
 import com.project.businesslogic.Job;
 import com.project.businesslogic.meta.UserType;
 import com.project.businesslogic.user.CustomerUser;
@@ -7,12 +8,12 @@ import com.project.dao.CustomerUserDAO;
 import com.project.security.CustomUserDetails;
 import com.project.services.JobService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -51,9 +52,12 @@ public class CustomerUserController {
                              @RequestParam(value = "userImage") MultipartFile userImage,
                              Principal principal) {
         try {
-            if (userImage.getSize()!=0) tmpUser.setImage(userImage.getBytes());
-            CustomUserDetails customUserDetails = (CustomUserDetails) ((Authentication) principal).getPrincipal();
-            customerUserDAO.realUpdate(lastId, tmpUser, customUserDetails);
+            if (userImage.getSize()!=0) {
+                Image image = new Image();
+                image.setImage(userImage.getBytes());
+                tmpUser.setImage(image);
+            }
+            customerUserDAO.realUpdate(lastId, tmpUser, (CustomUserDetails) ((Authentication) principal).getPrincipal());
 
             ModelAndView modelAndView =  new ModelAndView("public/success/on_register_success");
             modelAndView.addObject("titleMessage", "Profile edit success");
@@ -113,18 +117,6 @@ public class CustomerUserController {
             ModelAndView modelAndView = new ModelAndView("public/error/error");
             return modelAndView;
         }
-    }
-
-    //not my code - from SteakOverFlow
-    @RequestMapping(value = "/image/{userId}"/*, produces = MediaType.IMAGE_JPEG_VALUE*/)
-    public ResponseEntity<byte[]> getCustomerImage(@PathVariable("userId") Long userId) throws IOException {
-
-        CustomerUser customerUser = customerUserDAO.get(userId);
-        byte[] imageContent = customerUser.getImage();
-        if (imageContent==null) imageContent = customerUserDAO.getDefaultUser().getImage();
-        final HttpHeaders headers = new HttpHeaders();
-        //headers.setContentType(MediaType.IMAGE_JPEG);
-        return new ResponseEntity<byte[]>(imageContent, headers, HttpStatus.OK);
     }
 
 }

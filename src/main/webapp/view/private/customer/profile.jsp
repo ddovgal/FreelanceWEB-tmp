@@ -59,7 +59,7 @@
             </c:forEach>
         </div>
         <div class="right-bar" align="center">
-            <img id="userLogo" src="${root}/usr/customer/image/${userId}" style="width: 175px;
+            <img id="userLogo" src="${root}/user/image/${userId}" style="width: 175px;
                                                                                      height: 175px;
                                                                                      margin-top: 10px;
                                                                                      border: solid 3px #4b4b4b;
@@ -73,13 +73,13 @@
                 String newFormatBirthday = sdf.format(user.getBirthday());
             %>
             <div id="birthday" style="margin-top: 5px; font-size: 15px"><b><%=newFormatBirthday%></b></div>
-            <form id="edit-profile-button-form" action="${root}/usr/customer/profileDetail" method="get">
-                <input class="coolButton" name="submit" size="60" value="Edit my profile" type="submit" style="margin-top: 40px">
-                <input type="hidden" value="<sec:authentication property="principal.id" />" name="userId" />
-            </form>
 
             <form id="newJob-button-form" action="${root}/jobs/newJob" method="get">
                 <input class="coolButton" name="submit" size="60" value="Create new job" type="submit" style="margin-top: 40px">
+            </form>
+            <form id="edit-profile-button-form" action="${root}/usr/customer/profileDetail" method="get">
+                <input class="coolButton" name="submit" size="60" value="Edit my profile" type="submit" style="margin-top: 10px">
+                <input type="hidden" value="<sec:authentication property="principal.id" />" name="userId" />
             </form>
             <form id="messages-button-form" action="${root}/usr/customer/messages" method="get">
                 <input class="coolButton" name="submit" size="60" value="My messages" type="submit" style="margin-top: 10px">

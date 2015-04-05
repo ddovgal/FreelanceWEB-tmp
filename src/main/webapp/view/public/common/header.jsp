@@ -48,7 +48,7 @@
                             font-weight: bold;
                             text-shadow: 0 -1px 1px #222;
                             font-family:Verdana, Geneva, sans-serif;"
-                    onclick="javascript:formSubmit()"><p>Logout</p></button>
+                    onclick="javascript:formSubmit()"><p style="margin-top: 0px; margin-bottom: 0px">Logout</p></button>
             <c:url value="/j_spring_security_logout" var="logoutUrl" />
             <!-- csrt for log out-->
             <form id="logoutForm" action="${logoutUrl}" method="post" >
@@ -69,8 +69,8 @@
 <ul class="navigation">
     <li><a href="${root}/home" title="Home">Home</a></li>
     <li><a href="${root}/jobs/byCriterion" title="Jobs">Jobs</a></li>
-    <li><a href="" title="About us">About us</a></li>
-    <li><a href="" title="Contacts">Contacts</a></li>
+    <li><a href="${root}/view/public/about_us.jsp" title="About us">About us</a></li>
+    <%--<li><a href="" title="Contacts">Contacts</a></li>--%>
 
     <c:if test="${!isUserSessionOpened}">
         <li style="margin-left: 600px"><a href="" title="Sign up">Sign up</a>

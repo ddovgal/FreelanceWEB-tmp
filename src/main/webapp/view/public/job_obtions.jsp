@@ -75,7 +75,7 @@
                     <c:if test="${isOpen}">
                         <c:forEach items="${applicants}" var="applicant">
                             <div class="applicantItem">
-                                <img align="left" id="userLogo" src="${root}/usr/developer/image/${applicant.id}" style="width: 75px;
+                                <img align="left" id="userLogo" src="${root}/user/image/${applicant.id}" style="width: 75px;
                                                                                      height: 75px;
                                                                                      border: solid 2px #4b4b4b;
                                                                                      border-radius: 5px 5px 5px 5px;"/>
@@ -101,17 +101,17 @@
                     </c:if>
                     <c:if test="${!isOpen}">
                         <div class="applicantItem">
-                            <img align="left" id="developerLogo" src="${root}/usr/developer/image/${job.developerUser.id}" style="width: 75px;
+                            <img align="left" id="developerLogo" src="${root}/user/image/${developerUser.id}" style="width: 75px;
                                                                                      height: 75px;
                                                                                      border: solid 2px #4b4b4b;
                                                                                      border-radius: 5px 5px 5px 5px;"/>
                             <p style="margin-top: 0px; font-size: 15px">
                             <table style="color: #000000">
                                 <tr>
-                                    <td style="padding-left: 10px"><b>${job.developerUser.snf}</b></td>
+                                    <td style="padding-left: 10px"><b>${developerUser.snf}</b></td>
                                 </tr>
                                 <tr>
-                                    <td style="padding-left: 10px"><b>His rating: ${job.developerUser.rating}</b></td>
+                                    <td style="padding-left: 10px"><b>His rating: ${developerUser.rating}</b></td>
                                 </tr>
                             </table>
                             </p>
@@ -119,7 +119,7 @@
                                 <form id="dismiss-button-form" action="${root}/jobs/remove/developer" method="post">
                                     <input class="button_example" value="Dismiss him" type="submit" style="margin-top: 10px">
                                     <input type="hidden" value="${job.id}" name="jobId" />
-                                    <input type="hidden" value="${job.developerUser.id}" name="developerId" />
+                                    <input type="hidden" value="${developerUser.id}" name="developerId" />
                                 </form>
                             </div>
                         </div>

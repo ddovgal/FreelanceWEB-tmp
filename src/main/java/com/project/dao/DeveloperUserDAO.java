@@ -1,8 +1,10 @@
 package com.project.dao;
 
 import com.project.businesslogic.Job;
+import com.project.businesslogic.user.CustomerUser;
 import com.project.businesslogic.user.DeveloperUser;
 import com.project.businesslogic.user.User;
+import com.project.security.CustomUserDetails;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -64,6 +66,22 @@ public class DeveloperUserDAO implements CRUD<DeveloperUser> {
         criteria.add(Restrictions.eq("j.id", jobId));
         Job j = (Job) criteria.uniqueResult();
         return j != null;
+    }
+
+    @Transactional
+    public void realUpdate(Long realUserId, DeveloperUser tmpUser, CustomUserDetails customUserDetails){
+        Session session = sessionFactory.getCurrentSession();
+        DeveloperUser realUser = (DeveloperUser) session.get(DeveloperUser.class, realUserId);
+        realUser.setSnf(tmpUser.getSnf());
+        customUserDetails.setSnf(tmpUser.getSnf());
+        customUserDetails.setPassword(tmpUser.getPassword());
+        realUser.setPassword(tmpUser.getPassword());
+        realUser.setBirthday(tmpUser.getBirthday());
+        if (tmpUser.getImage()!=null) {
+            if (realUser.getImage()==null) realUser.setImage(tmpUser.getImage());
+            else realUser.getImage().setImage(tmpUser.getImage().getImage());
+        }
+        session.merge(realUser);
     }
 
     @Override

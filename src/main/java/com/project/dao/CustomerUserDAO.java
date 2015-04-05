@@ -50,9 +50,13 @@ public class CustomerUserDAO implements CRUD<CustomerUser> {
         CustomerUser realUser = (CustomerUser) session.get(CustomerUser.class, realUserId);
         realUser.setSnf(tmpUser.getSnf());
         customUserDetails.setSnf(tmpUser.getSnf());
+        customUserDetails.setPassword(tmpUser.getPassword());
         realUser.setPassword(tmpUser.getPassword());
         realUser.setBirthday(tmpUser.getBirthday());
-        if (tmpUser.getImage()!=null) realUser.setImage(tmpUser.getImage());
+        if (tmpUser.getImage()!=null) {
+            if (realUser.getImage()==null) realUser.setImage(tmpUser.getImage());
+            else realUser.getImage().setImage(tmpUser.getImage().getImage());
+        }
         session.merge(realUser);
     }
 
@@ -68,11 +72,11 @@ public class CustomerUserDAO implements CRUD<CustomerUser> {
         session.delete(object);
     }
 
-    //get default user with id 1, for getting his default image
-    @Transactional(readOnly = true) //TODO: change to search by id
-    public User getDefaultUser(){
-        Session session = sessionFactory.getCurrentSession();
-        return (User) session.createQuery("from User d where d.email = :email")
-                .setParameter("email", "\"^_default$Email").uniqueResult();
-    }
+//    //get default user with id 1, for getting his default image
+//    @Transactional(readOnly = true) //TODO: change to search by id
+//    public User getDefaultUser(){
+//        Session session = sessionFactory.getCurrentSession();
+//        return (User) session.createQuery("from User d where d.email = :email")
+//                .setParameter("email", "\"^_default$Email").uniqueResult();
+//    }
 }

@@ -56,7 +56,7 @@
                         <input type="password" id="repassword" onchange="checkPasswords()" name="repassword" required="">
 
                         <p class="contact"><label for="skills">Skills</label></p>
-                        <input id="skills" name="skills" placeholder="example@domain.com" required="" type="text">
+                        <input id="skills" name="skills" required="" type="text">
 
                         <p class="contact"><label for="birthday">DOB in (dd/MM/yyyy) format</label></p>
                         <input type="text" id="birthday" name="birthday" required="">

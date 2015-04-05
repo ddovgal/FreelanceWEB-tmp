@@ -51,7 +51,7 @@
             <c:if test="${not empty error}">
               Error: ${error}
             </c:if>
-            <form id="signup-form" action="${root}/usr/customer/edit" method="post" enctype="multipart/form-data">
+            <form id="signup-form" action="${root}/usr/developer/edit" method="post" enctype="multipart/form-data">
 
               <p class="contact"><label for="snf">Surname Name Fathersname</label></p>
               <input id="snf" style="margin-top: 5px" name="snf" value="${user.snf}" required="" tabindex="1" type="text">
@@ -62,9 +62,12 @@
               <p class="contact"><label for="repassword">Confirm your password</label></p>
               <input type="password" style="margin-top: 5px" id="repassword" onchange="checkPasswords()" name="repassword" required="">
 
+              <p class="contact"><label for="skills">Skills</label></p>
+              <input id="skills" name="skills" value="${user.skills}" required="" type="text">
+
               <%  User user = (User) request.getAttribute("user");
-                  SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-                  String newFormatDate = sdf.format(user.getBirthday());
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                String newFormatDate = sdf.format(user.getBirthday());
               %>
 
               <p class="contact"><label for="birthday">Your birthday in (dd/MM/yyyy) format</label></p>

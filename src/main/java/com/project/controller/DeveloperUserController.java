@@ -1,19 +1,20 @@
 package com.project.controller;
 
+import com.project.businesslogic.Image;
 import com.project.businesslogic.Job;
 import com.project.businesslogic.meta.UserType;
 import com.project.businesslogic.user.DeveloperUser;
 import com.project.dao.DeveloperUserDAO;
+import com.project.security.CustomUserDetails;
 import com.project.services.JobService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
@@ -38,9 +39,35 @@ public class DeveloperUserController {
     }
 
     @RequestMapping(value = "/profileDetail", method = RequestMethod.GET)
-    public ModelAndView redirectToProfileDetail() {
-        ModelAndView modelAndView = new ModelAndView("private/customer/profile_detail");
+    public ModelAndView redirectToProfileDetail(@RequestParam(value = "userId") Long userId) {
+        ModelAndView modelAndView = new ModelAndView("private/developer/profile_detail");
+        DeveloperUser developerUser = developerUserDAO.get(userId);
+        modelAndView.addObject("user", developerUser);
         return modelAndView;
+    }
+
+    @RequestMapping(value = "/edit", method = RequestMethod.POST)
+    public ModelAndView edit(@ModelAttribute DeveloperUser tmpUser,
+                             @RequestParam(value = "lastId") Long lastId,
+                             @RequestParam(value = "userImage") MultipartFile userImage,
+                             Principal principal) {
+        try {
+            if (userImage.getSize()!=0) {
+                Image image = new Image();
+                image.setImage(userImage.getBytes());
+                tmpUser.setImage(image);
+            }
+            developerUserDAO.realUpdate(lastId, tmpUser, (CustomUserDetails) ((Authentication) principal).getPrincipal());
+
+            ModelAndView modelAndView =  new ModelAndView("public/success/on_register_success");
+            modelAndView.addObject("titleMessage", "Profile edit success");
+            modelAndView.addObject("successMessage", "Your profile was successfully edited!");
+            return modelAndView;
+        } catch (IOException e) {
+            e.printStackTrace();
+            ModelAndView modelAndView = new ModelAndView("public/error/error");
+            return modelAndView;
+        }
     }
 
     @RequestMapping(value = "/register", method = RequestMethod.POST)
@@ -83,17 +110,4 @@ public class DeveloperUserController {
             return modelAndView;
         }
     }
-
-    //not my code - from SteakOverFlow
-    @RequestMapping(value = "/image/{userId}"/*, produces = MediaType.IMAGE_JPEG_VALUE*/)
-    public ResponseEntity<byte[]> getCustomerImage(@PathVariable("userId") Long userId) throws IOException {
-
-        DeveloperUser developerUser = developerUserDAO.get(userId);
-        byte[] imageContent = developerUser.getImage();
-        if (imageContent==null) imageContent = developerUserDAO.getDefaultUser().getImage();
-        final HttpHeaders headers = new HttpHeaders();
-        //headers.setContentType(MediaType.IMAGE_JPEG);
-        return new ResponseEntity<byte[]>(imageContent, headers, HttpStatus.OK);
-    }
-
 }

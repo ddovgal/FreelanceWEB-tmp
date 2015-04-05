@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 @Repository
-public class UserDAO {
+public class UserDAO implements CRUD<User> {
 
     private SessionFactory sessionFactory;
 
@@ -25,4 +25,25 @@ public class UserDAO {
         return user;
     }
 
+    @Override
+    public long create(User object) {
+        return 0;
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public User get(long id) {
+        Session session = sessionFactory.getCurrentSession();
+        return (User) session.get(User.class, id);
+    }
+
+    @Override
+    public void update(User object) {
+
+    }
+
+    @Override
+    public void delete(User object) {
+
+    }
 }

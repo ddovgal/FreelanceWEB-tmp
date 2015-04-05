@@ -200,6 +200,23 @@ p.middleText {
     background-image: linear-gradient(to bottom, #45484d, #000000);filter:progid:DXImageTransform.Microsoft.gradient(GradientType=0,startColorstr=#45484d, endColorstr=#000000);
 }
 
+.button_blue { background: #4b8df9;
+    display: inline-block;
+    padding: 5px 10px 6px;
+    color: #fbf7f7; text-decoration: none;
+    font-weight: bold;  line-height: 1;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    -moz-box-shadow: 0 1px 3px #999;
+    -webkit-box-shadow: 0 1px 3px #999;
+    box-shadow: 0 1px 3px #999;
+    text-shadow: 0 -1px 1px #222;
+    border: none; position: relative;
+    cursor: pointer; font-size: 14px;
+    font-family:Verdana, Geneva, sans-serif;
+}
+
 .button_example:hover{
     border:1px solid #151617;
     background-color: #2d2f32; background-image: -webkit-gradient(linear, left top, left bottom, from(#2d2f32), to(#1a1a1a));
