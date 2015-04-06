@@ -21,12 +21,7 @@
 
     <div class="content">
         <div class="left-bar" align="center">
-            <%--<form id="newJob-button-form" action="${root}/jobs/newJob" method="get">
-                <input class="coolButton" name="submit" size="60" value="Create new job" type="submit" style="margin-top: 70px">
-            </form>
-            <form id="messages-button-form" action="${root}/usr/customer/messages" method="get">
-                <input class="coolButton" name="submit" size="60" value="My messages" type="submit" style="margin-top: 10px">
-            </form>--%>
+
         </div>
         <div class="central-bar">
             <div align="center" style="margin-bottom: 20px; font-size: 30px"><b>My current jobs</b></div>
@@ -81,8 +76,9 @@
                 <input class="coolButton" name="submit" size="60" value="Edit my profile" type="submit" style="margin-top: 10px">
                 <input type="hidden" value="<sec:authentication property="principal.id" />" name="userId" />
             </form>
-            <form id="messages-button-form" action="${root}/usr/customer/messages" method="get">
+            <form id="messages-button-form" action="${root}/messages/show" method="post">
                 <input class="coolButton" name="submit" size="60" value="My messages" type="submit" style="margin-top: 10px">
+                <input type="hidden" value="<sec:authentication property="principal.id"/>" name="myId" />
             </form>
 
         </div>

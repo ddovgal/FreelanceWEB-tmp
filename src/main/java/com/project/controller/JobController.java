@@ -64,11 +64,13 @@ public class JobController {
                         modelAndView.addObject("jobId", job.getId());
                         DeveloperUser developerUser = job.getDeveloperUser();
                         modelAndView.addObject("developerUser", developerUser);
-                        System.out.println(developerUser.getSnf());
+                        if (developerUser!=null) System.out.println(developerUser.getSnf());
                         List<DeveloperUser> appl = job.getApplicants();
                         modelAndView.addObject("applicants", appl);
-                        for (DeveloperUser d : appl) {
-                            System.out.println(appl);
+                        if (appl.size()!=0){
+                            for (DeveloperUser d : appl) {
+                                System.out.println(appl);
+                            }
                         }
                         break;
                     }

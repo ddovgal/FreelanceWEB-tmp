@@ -192,3 +192,26 @@ http://www.freshdesignweb.com/beautiful-registration-form-with-html5-and-css3.ht
 .form input.button { background: #4b8df9; display: inline-block; padding: 5px 10px 6px; color: #fbf7f7; text-decoration: none; font-weight: bold; line-height: 1; -moz-border-radius: 5px; -webkit-border-radius: 5px; border-radius: 5px; -moz-box-shadow: 0 1px 3px #999; -webkit-box-shadow: 0 1px 3px #999; box-shadow: 0 1px 3px #999; text-shadow: 0 -1px 1px #222; border: none; position: relative; cursor: pointer; font-size: 14px; font-family:Verdana, Geneva, sans-serif;}
 .coolButton { background: #4b8df9; display: inline-block; padding: 5px 10px 6px; color: #fbf7f7; text-decoration: none; font-weight: bold; line-height: 1; -moz-border-radius: 5px; -webkit-border-radius: 5px; border-radius: 5px; -moz-box-shadow: 0 1px 3px #999; -webkit-box-shadow: 0 1px 3px #999; box-shadow: 0 1px 3px #999; text-shadow: 0 -1px 1px #222; border: none; position: relative; cursor: pointer; font-size: 14px; font-family:Verdana, Geneva, sans-serif;}
 .form input.button:hover	{ background-color: #2a78f6; }
+
+.overflow-div-messages {
+    width:730px; /* ширина нашего блока */
+    min-height:600px; /* высота нашего блока */
+    max-height:600px; /* высота нашего блока */
+    padding: 15px 30px 15px 15px;
+    margin-bottom: 25px;
+    background: #f1f1f1; /* цвет фона */
+    border-radius: 10px 10px 10px 10px;
+    /*overflow: auto; /!* свойство для прокрутки по горизонтали. Автоматом, если больше блока *!/*/
+    overflow-y: scroll;
+}
+
+.overflow-div-interlocutors {
+    width:82px; /* ширина нашего блока */
+    min-height:600px; /* высота нашего блока */
+    max-height:600px; /* высота нашего блока */
+    padding: 5px 20px 5px 5px;
+    background: #f1f1f1; /* цвет фона */
+    border-radius: 5px 5px 5px 5px;
+    /*overflow: auto; /!* свойство для прокрутки по горизонтали. Автоматом, если больше блока *!/*/
+    overflow-y: scroll;
+}
