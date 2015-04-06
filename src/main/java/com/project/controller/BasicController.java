@@ -79,5 +79,4 @@ public class BasicController {
         return new ResponseEntity<byte[]>(image.getImage(), headers, HttpStatus.OK);
     }
 
-    
 }
