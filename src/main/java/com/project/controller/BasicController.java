@@ -70,7 +70,8 @@ public class BasicController {
 
         //just for "about us" page
         if (userId==-1) return new ResponseEntity<byte[]>(imageDAO.getByName("dmitriy").getImage(), headers, HttpStatus.OK);
-        if (userId==-2) return new ResponseEntity<byte[]>(imageDAO.getByName("grigoriy").getImage(), headers, HttpStatus.OK);
+        /*if (userId==-2) return new ResponseEntity<byte[]>(imageDAO.getByName("grigoriy").getImage(), headers, HttpStatus.OK);*/ //TODO: change
+        if (userId==-2) return new ResponseEntity<byte[]>(imageDAO.getByName("anonymous").getImage(), headers, HttpStatus.OK);
         if (userId==-3) return new ResponseEntity<byte[]>(imageDAO.getByName("eugen").getImage(), headers, HttpStatus.OK);
 
         Image image = imageDAO.getByUserId(userId);

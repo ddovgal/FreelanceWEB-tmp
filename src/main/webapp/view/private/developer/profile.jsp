@@ -57,6 +57,10 @@
                         <input class="button_blue" name="submit" size="60" value="Edit my profile" type="submit" style="margin-top: 40px">
                         <input type="hidden" value="<sec:authentication property="principal.id" />" name="userId" />
                     </form>
+                    <form id="messages-button-form" action="${root}/messages/show" method="post">
+                        <input class="button_blue" name="submit" size="60" value="My messages" type="submit">
+                        <input type="hidden" value="<sec:authentication property="principal.id"/>" name="myId" />
+                    </form>
                 </div>
             </div>
             <div class="right-bar">

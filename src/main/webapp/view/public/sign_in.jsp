@@ -17,7 +17,7 @@
         <%--include header--%>
         <%@ include file="/view/public/common/header.jsp" %>
 
-        <div class="content">
+        <div class="content" style="height: 400px">
             <h1 class="pageTitle">Sign in</h1>
             <div class="container">
                 <div  class="form">
@@ -37,7 +37,9 @@
                         <p class="contact"><label for="password">Password</label></p>
                         <p><input id="password" type='password' name='password' style="border-width: 1px; border-style: solid"></p>
                         <p><input id="remember" name="_spring_security_remember_me" type="checkbox" /> Remember me</p>
-                        <input class="button" name="submit" id="submit" tabindex="5" value="Sign in" type="submit">
+                        <div style="margin-top: 5px" align="center">
+                            <input class="button" name="submit" id="submit" tabindex="5" value="Sign in" type="submit">
+                        </div>
 
                         <input type="hidden" name="${_csrf.parameterName}"
                                value="${_csrf.token}" />

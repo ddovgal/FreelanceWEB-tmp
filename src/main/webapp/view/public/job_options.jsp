@@ -43,7 +43,14 @@
                         }
                     </script>
                     <h5>You have already applied for this job!</h5>
-                    <button class="button_example" id="cancelApplyForJobButton" onclick="removeApplicant()">Cancel appliance</button>
+                    <div style="margin-top: 5px">
+                        <form id="cancelAppliance-button-form" style="display: inline-block">
+                            <button class="button_example" id="cancelApplyForJobButton" onclick="removeApplicant()" style="margin-top: 10px; margin-right: 5px">Cancel appliance</button>
+                        </form>
+                        <form id="messageCustomer-button-form" action="${root}/messages/show_for/${customerUser.id}" method="get"  style="display: inline-block">
+                            <input class="button_example" value="Message" type="submit" style="margin-top: 10px; margin-left: 5px">
+                        </form>
+                    </div>
                 </c:if>
                 <c:if test="${!isApplicant}" >
                     <script>
@@ -63,7 +70,14 @@
                         }
                     </script>
                     <h5>You haven't already applied for this job!</h5>
-                    <button class="button_example" id="applyForJobButton" onclick="addApplicant()">Apply for job</button>
+                    <div style="margin-top: 5px">
+                        <form id="applyForJob-button-form" style="display: inline-block">
+                            <button class="button_example" id="applyForJobButton" onclick="addApplicant()" style="margin-top: 10px; margin-right: 5px">Apply for job</button>
+                        </form>
+                        <form id="messageCustomer-button-form-applied" action="${root}/messages/show_for/${customerUser.id}" method="get"  style="display: inline-block">
+                            <input class="button_example" value="Message" type="submit" style="margin-top: 10px; margin-left: 5px">
+                        </form>
+                    </div>
                 </c:if>
             </c:if>
             <c:if test="${isAdmin}">
@@ -90,17 +104,20 @@
                                 </table>
                                 </p>
                                 <div align="center" style="margin-top: 5px">
-                                    <form id="accept-button-form" action="${root}/jobs/add/developer" method="post">
-                                        <input class="button_example" value="Chose him" type="submit" style="margin-top: 10px">
+                                    <form id="accept-button-form" action="${root}/jobs/add/developer" method="post" style="display: inline-block">
+                                        <input class="button_example" value="Choose" type="submit" style="margin-top: 10px; margin-right: 5px">
                                         <input type="hidden" value="${job.id}" name="jobId" />
                                         <input type="hidden" value="${applicant.id}" name="developerId" />
+                                    </form>
+                                    <form id="messageApplicant-button-form" action="${root}/messages/show_for/${applicant.id}" method="get"  style="display: inline-block">
+                                        <input class="button_example" value="Message" type="submit" style="margin-top: 10px; margin-left: 5px">
                                     </form>
                                 </div>
                             </div>
                         </c:forEach>
                     </c:if>
                     <c:if test="${!isOpen}">
-                        <div class="applicantItem">
+                        <div class="applicantItem" style="border: solid 3px limegreen">
                             <img align="left" id="developerLogo" src="${root}/user/image/${developerUser.id}" style="width: 75px;
                                                                                      height: 75px;
                                                                                      border: solid 2px #4b4b4b;
@@ -116,10 +133,13 @@
                             </table>
                             </p>
                             <div align="center" style="margin-top: 5px">
-                                <form id="dismiss-button-form" action="${root}/jobs/remove/developer" method="post">
-                                    <input class="button_example" value="Dismiss him" type="submit" style="margin-top: 10px">
+                                <form id="dismiss-button-form" action="${root}/jobs/remove/developer" method="post" style="display: inline-block">
+                                    <input class="button_example" value="Dismiss" type="submit" style="margin-top: 10px; margin-right: 5px">
                                     <input type="hidden" value="${job.id}" name="jobId" />
                                     <input type="hidden" value="${developerUser.id}" name="developerId" />
+                                </form>
+                                <form id="messageDeveloper-button-form" action="${root}/messages/show_for/${developerUser.id}" method="GET"  style="display: inline-block">
+                                    <input class="button_example" value="Message" type="submit" style="margin-top: 10px; margin-left: 5px">
                                 </form>
                             </div>
                         </div>
@@ -161,11 +181,15 @@
                 <%--some logic for customer--%>
                 <c:if test="${isMine}">
                     <form id="edit-button-form" action="${root}/jobs/editJob" method="get">
-                        <input class="coolButton" size="60" value="Edit this job" type="submit" style="margin-top: 100px">
+                        <input class="coolButton" size="60" value="Edit this job" type="submit" style="margin-top: 40px">
                         <input type="hidden" value="${job.id}" name="jobId" />
                     </form>
                     <form id="delete-button-form" action="${root}/jobs/deleteJob" method="post">
                         <input class="coolButton" size="60" value="Delete this job" type="submit" style="margin-top: 10px">
+                        <input type="hidden" value="${job.id}" name="jobId" />
+                    </form>
+                    <form id="setFinished-button-form" action="${root}/jobs/setFinished" method="post">
+                        <input class="coolButton" size="60" value="Set finished" type="submit" style="margin-top: 10px">
                         <input type="hidden" value="${job.id}" name="jobId" />
                     </form>
                 </c:if>

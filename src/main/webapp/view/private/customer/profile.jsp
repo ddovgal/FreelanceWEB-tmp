@@ -24,10 +24,20 @@
 
         </div>
         <div class="central-bar">
-            <div align="center" style="margin-bottom: 20px; font-size: 30px"><b>My current jobs</b></div>
+            <div align="center" style="margin-bottom: 35px; font-size: 40px"><b>My current jobs</b></div>
             <c:forEach items="${jobs}" var="job">
                 <div class="jobItem">
-                    <div style="background: rgb(58,58,58); color: white">
+                    <c:if test="${job.finished}">
+                        <div style="background: limegreen; color: white">
+                    </c:if>
+                    <c:if test="${!job.finished}">
+                        <c:if test="${job.developerUser!=null}">
+                        <div style="background: cornflowerblue; color: white">
+                        </c:if>
+                        <c:if test="${job.developerUser==null}">
+                            <div style="background: rgb(58,58,58); color: white">
+                        </c:if>
+                    </c:if>
                         <p style="text-align: center;
                                 font-size: medium;
                                 margin-top: auto;"><b>${job.title}</b></p>

@@ -96,12 +96,4 @@ public class DeveloperUserDAO implements CRUD<DeveloperUser> {
         session.delete(object);
     }
 
-    //get default user with id 1, for getting his default image
-    @Transactional(readOnly = true)  //TODO: change to search by id
-    public User getDefaultUser(){
-        Session session = sessionFactory.getCurrentSession();
-        return (User) session.createQuery("from User d where d.email = :email")
-                .setParameter("email", "\"^_default$Email").uniqueResult();
-    }
-
 }

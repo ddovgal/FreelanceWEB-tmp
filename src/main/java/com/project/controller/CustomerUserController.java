@@ -59,13 +59,13 @@ public class CustomerUserController {
             }
             customerUserDAO.realUpdate(lastId, tmpUser, (CustomUserDetails) ((Authentication) principal).getPrincipal());
 
-            ModelAndView modelAndView =  new ModelAndView("public/success/on_register_success");
+            ModelAndView modelAndView =  new ModelAndView("public/on_success");
             modelAndView.addObject("titleMessage", "Profile edit success");
             modelAndView.addObject("successMessage", "Your profile was successfully edited!");
             return modelAndView;
         } catch (IOException e) {
             e.printStackTrace();
-            ModelAndView modelAndView = new ModelAndView("public/error/error");
+            ModelAndView modelAndView = new ModelAndView("public/error");
             return modelAndView;
         }
     }
@@ -76,7 +76,7 @@ public class CustomerUserController {
         System.out.println(customerUser);
         try {
             long id = customerUserDAO.create(customerUser);
-            ModelAndView modelAndView =  new ModelAndView("public/success/on_register_success");
+            ModelAndView modelAndView =  new ModelAndView("public/on_success");
             modelAndView.addObject("titleMessage", "Customer register success");
             modelAndView.addObject("successMessage", "Customer user was successfully registered!");
             return modelAndView;
@@ -102,7 +102,7 @@ public class CustomerUserController {
             return modelAndView;
         } catch (Exception e) {
             e.printStackTrace();
-            ModelAndView modelAndView = new ModelAndView("public/error/error");
+            ModelAndView modelAndView = new ModelAndView("public/error");
             return modelAndView;
         }
     }
@@ -110,11 +110,11 @@ public class CustomerUserController {
     @RequestMapping(value = "/messages", method = RequestMethod.GET)
     public ModelAndView redirectToMessages() {
         try {
-            ModelAndView modelAndView = new ModelAndView("private/customer/messages");
+            ModelAndView modelAndView = new ModelAndView("public/messages");
             return modelAndView;
         } catch (Exception e) {
             e.printStackTrace();
-            ModelAndView modelAndView = new ModelAndView("public/error/error");
+            ModelAndView modelAndView = new ModelAndView("public/error");
             return modelAndView;
         }
     }

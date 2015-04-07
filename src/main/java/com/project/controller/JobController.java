@@ -1,6 +1,7 @@
 package com.project.controller;
 
 import com.project.businesslogic.Job;
+import com.project.businesslogic.user.CustomerUser;
 import com.project.businesslogic.user.DeveloperUser;
 import com.project.businesslogic.user.User;
 import com.project.dao.DeveloperUserDAO;
@@ -45,7 +46,7 @@ public class JobController {
     public ModelAndView get(Principal principal, @RequestParam(value = "jobId") Long jobId) {
         try {
             Job job = jobService.get(jobId);
-            ModelAndView modelAndView = new ModelAndView("public/job_obtions");
+            ModelAndView modelAndView = new ModelAndView("public/job_options");
             modelAndView.addObject("job", job);
 
             if (principal != null) {
@@ -63,8 +64,8 @@ public class JobController {
                         modelAndView.addObject("isMine", job.getCustomerUser().getId()==user.getId());
                         modelAndView.addObject("jobId", job.getId());
                         DeveloperUser developerUser = job.getDeveloperUser();
-                        modelAndView.addObject("developerUser", developerUser);
                         if (developerUser!=null) System.out.println(developerUser.getSnf());
+                        modelAndView.addObject("developerUser", developerUser);
                         List<DeveloperUser> appl = job.getApplicants();
                         modelAndView.addObject("applicants", appl);
                         if (appl.size()!=0){
@@ -78,6 +79,9 @@ public class JobController {
                         modelAndView.addObject("isDeveloper", true);
                         modelAndView.addObject("isApplicant", developerUserDAO.isApplicableForJob(jobId, email));
                         modelAndView.addObject("isWorker", developerUserDAO.isWorkerOfJob(jobId, email));
+                        CustomerUser customerUser = job.getCustomerUser();
+                        System.out.println(customerUser.getSnf());
+                        modelAndView.addObject("customerUser", customerUser);
                         break;
                     }
                 }
@@ -85,7 +89,7 @@ public class JobController {
             return modelAndView;
         } catch (Exception e) {
             e.printStackTrace();
-            ModelAndView modelAndView = new ModelAndView("public/error/error");
+            ModelAndView modelAndView = new ModelAndView("public/error");
             return modelAndView;
         }
     }
@@ -114,30 +118,22 @@ public class JobController {
             return modelAndView;
         } catch (Exception e) {
             e.printStackTrace();
-            ModelAndView modelAndView = new ModelAndView("public/error/error");
+            ModelAndView modelAndView = new ModelAndView("public/error");
             modelAndView.addObject(e);
             return modelAndView;
         }
     }
 
-//    @RequestMapping(value = "/byCustomer", method = RequestMethod.GET)
-//    public ModelAndView getJobsByCustomer(Principal principal) {
-//        long id = ((CustomUserDetails)principal).getId();
-//        ModelAndView modelAndView = new ModelAndView("public/jobs");
-//
-//        return modelAndView;
-//    }
-
     @RequestMapping(value = "/newJob", method = RequestMethod.GET)
     public ModelAndView redirectToCreation() {
-        ModelAndView modelAndView = new ModelAndView("private/customer/job_register");
+        ModelAndView modelAndView = new ModelAndView("private/customer/job_register-edit");
         modelAndView.addObject("isToCreate", true);
         return modelAndView;
     }
 
     @RequestMapping(value = "/editJob", method = RequestMethod.GET)
     public ModelAndView redirectToEdit(@RequestParam(value = "jobId") Long jobId) {
-        ModelAndView modelAndView = new ModelAndView("private/customer/job_register");
+        ModelAndView modelAndView = new ModelAndView("private/customer/job_register-edit");
         Job job = jobService.get(jobId);
         modelAndView.addObject("isToCreate", false);
         modelAndView.addObject("jobObj", job);
@@ -154,7 +150,7 @@ public class JobController {
         job.setApplicants(null);
         jobService.delete(job);
 
-        ModelAndView modelAndView = new ModelAndView("public/success/on_register_success");
+        ModelAndView modelAndView = new ModelAndView("public/on_success");
         modelAndView.addObject("titleMessage", "Job delete success");
         modelAndView.addObject("successMessage", "Job was successfully deleted!");
         return modelAndView;
@@ -165,7 +161,7 @@ public class JobController {
                                   @RequestParam(value = "customerId") Long customerId,
                                   @RequestParam(value = "isToCreate") boolean isToCreate,
                                   @RequestParam(value = "lastId") Long lastId) {
-        ModelAndView modelAndView = new ModelAndView("public/success/on_register_success");
+        ModelAndView modelAndView = new ModelAndView("public/on_success");
         if (isToCreate){
             long id = jobService.create(job, customerId);
 
@@ -180,19 +176,28 @@ public class JobController {
         return modelAndView;
     }
 
+    @RequestMapping(value = "/setFinished", method = RequestMethod.POST)
+    public ModelAndView setFinished(@RequestParam(value = "jobId") Long jobId){
+        ModelAndView modelAndView = new ModelAndView("public/on_success");
+        jobService.setFinished(jobId);
+        modelAndView.addObject("titleMessage", "Job finished");
+        modelAndView.addObject("successMessage", "Job status was successfully changed to finished!");
+        return  modelAndView;
+    }
+
     @RequestMapping(value = "/add/developer", method = RequestMethod.POST)
     @ResponseBody
     public ModelAndView addDeveloper(@RequestParam Long jobId, @RequestParam Long developerId) {
         try {
             jobService.addDeveloper(jobId, developerId);
             jobService.removeApplicant(jobId, developerId);
-            ModelAndView modelAndView = new ModelAndView("public/success/on_register_success");
+            ModelAndView modelAndView = new ModelAndView("public/on_success");
             modelAndView.addObject("titleMessage", "Applicant accept");
             modelAndView.addObject("successMessage", "Applicant was successfully chosen for this job");
             return modelAndView;
         } catch (Exception e) {
             e.printStackTrace();
-            ModelAndView modelAndView = new ModelAndView("public/error/error");
+            ModelAndView modelAndView = new ModelAndView("public/error");
             return modelAndView;
         }
     }
@@ -202,13 +207,13 @@ public class JobController {
     public ModelAndView removeDeveloper(@RequestParam Long jobId, @RequestParam Long developerId) {
         try {
             jobService.removeDeveloper(jobId, developerId);
-            ModelAndView modelAndView = new ModelAndView("public/success/on_register_success");
+            ModelAndView modelAndView = new ModelAndView("public/on_success");
             modelAndView.addObject("titleMessage", "Developer dismissed");
             modelAndView.addObject("successMessage", "This bad developer was successfully dismissed");
             return modelAndView;
         } catch (Exception e) {
             e.printStackTrace();
-            ModelAndView modelAndView = new ModelAndView("public/error/error");
+            ModelAndView modelAndView = new ModelAndView("public/error");
             return modelAndView;
         }
     }

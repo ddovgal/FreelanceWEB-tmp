@@ -1,6 +1,7 @@
 package com.project.dao;
 
 import com.project.businesslogic.Job;
+import com.project.businesslogic.user.DeveloperUser;
 import org.hibernate.*;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,7 @@ public class JobDAO implements CRUD<Job> {
         criteria.add(Restrictions.eq("j.id", id));
         criteria.setFetchMode("j.applicants", FetchMode.JOIN);
         criteria.setFetchMode("j.developerUser", FetchMode.JOIN);
+        criteria.setFetchMode("j.customerUser", FetchMode.JOIN);
         return (Job) criteria.uniqueResult();
     }
 
@@ -128,11 +130,16 @@ public class JobDAO implements CRUD<Job> {
         return criteria.list();
     }
 
-    /*@Transactional(readOnly = true)
-    public boolean isOpen(long id) {
+    @Transactional
+    public void setFinished(Long id) {
         Session session = sessionFactory.getCurrentSession();
-        return ((Job) session.get(Job.class, id)).getDeveloperUser()==null;
-    }*/
+        Job job = ((Job) session.get(Job.class, id));
+        DeveloperUser developerUser = job.getDeveloperUser();
+        developerUser.setRating(developerUser.getRating()+15);
+        job.setFinished(true);
+        job.setApplicants(null);
+        update(job);
+    }
 
     @Override
     public void update(Job object) {

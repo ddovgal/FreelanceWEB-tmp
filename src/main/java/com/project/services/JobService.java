@@ -49,6 +49,7 @@ public class JobService {
         Job job = jobDAO.get(id);
         job.getApplicants();
         job.getDeveloperUser();
+        job.getCustomerUser();
         return job;
     }
 
@@ -110,6 +111,10 @@ public class JobService {
         realJob.setPrice(tmpJob.getPrice());
         realJob.setAgreement(tmpJob.getAgreement());
         jobDAO.update(realJob);
+    }
+
+    public void setFinished(Long id) {
+        jobDAO.setFinished(id);
     }
 
     public void update(Job object) {

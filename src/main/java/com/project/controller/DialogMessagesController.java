@@ -13,6 +13,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import java.io.IOException;
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -38,7 +39,7 @@ public class DialogMessagesController {
     @RequestMapping(value = "/show", method = RequestMethod.POST)
     public ModelAndView showAll(@RequestParam(value = "myId") Long myId){
         List<User> interlocutors = dialogMessageDAO.getAllInterlocutors(myId, null, null);
-        ModelAndView modelAndView =  new ModelAndView("private/customer/messages");
+        ModelAndView modelAndView =  new ModelAndView("public/messages");
         modelAndView.addObject("isFromRefresh", false);
         modelAndView.addObject("interlocutors", interlocutors);
         return modelAndView;
@@ -47,15 +48,24 @@ public class DialogMessagesController {
     @RequestMapping(value = "/show_for/{interlocutorId}", method = RequestMethod.GET)
     public ModelAndView getCustomerImage(Principal principal,
                                          @PathVariable("interlocutorId") Long interlocutorId) throws IOException {
+        ModelAndView modelAndView =  new ModelAndView("public/messages");
+
         Long myId = userDAO.getByEmail(principal.getName()).getId();
         List<User> interlocutors = dialogMessageDAO.getAllInterlocutors(myId, null, null);
-        List<DialogMessage> messages = dialogMessageDAO.getMessagesForInterlocutor(myId, interlocutorId, 0, 25);
-        ModelAndView modelAndView =  new ModelAndView("private/customer/messages");
+
+        if (interlocutors.contains( userDAO.get(interlocutorId))){
+            List<DialogMessage> messages = dialogMessageDAO.getMessagesForInterlocutor(myId, interlocutorId, 0, 25);
+            modelAndView.addObject("messages", messages);
+        } else {
+            interlocutors.add(0, userDAO.get(interlocutorId));
+            modelAndView.addObject("messages", new ArrayList<>());
+        }
+
         modelAndView.addObject("isFromRefresh", true);
         modelAndView.addObject("myId", myId);
         modelAndView.addObject("interlocutorId", interlocutorId);
         modelAndView.addObject("interlocutors", interlocutors);
-        modelAndView.addObject("messages", messages);
+
         return modelAndView;
     }
 

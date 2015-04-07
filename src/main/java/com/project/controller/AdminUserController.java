@@ -27,7 +27,7 @@ public class AdminUserController {
         System.out.println(adminUser);
         try {
             long id = adminUserDAO.create(adminUser);
-            ModelAndView modelAndView =  new ModelAndView("public/success/on_register_success");
+            ModelAndView modelAndView =  new ModelAndView("public/on_success");
             modelAndView.addObject("titleMessage", "Admin register success");
             modelAndView.addObject("successMessage", "Admin user was successfully registered!");
             return modelAndView;

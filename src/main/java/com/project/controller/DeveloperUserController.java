@@ -59,13 +59,13 @@ public class DeveloperUserController {
             }
             developerUserDAO.realUpdate(lastId, tmpUser, (CustomUserDetails) ((Authentication) principal).getPrincipal());
 
-            ModelAndView modelAndView =  new ModelAndView("public/success/on_register_success");
+            ModelAndView modelAndView =  new ModelAndView("public/on_success");
             modelAndView.addObject("titleMessage", "Profile edit success");
             modelAndView.addObject("successMessage", "Your profile was successfully edited!");
             return modelAndView;
         } catch (IOException e) {
             e.printStackTrace();
-            ModelAndView modelAndView = new ModelAndView("public/error/error");
+            ModelAndView modelAndView = new ModelAndView("public/error");
             return modelAndView;
         }
     }
@@ -76,7 +76,7 @@ public class DeveloperUserController {
         System.out.println(developerUser);
         try {
             long id = developerUserDAO.create(developerUser);
-            ModelAndView modelAndView =  new ModelAndView("public/success/on_register_success");
+            ModelAndView modelAndView =  new ModelAndView("public/on_success");
             modelAndView.addObject("titleMessage", "Developer register success");
             modelAndView.addObject("successMessage", "Developer user was successfully registered!");
 
@@ -106,7 +106,7 @@ public class DeveloperUserController {
             return modelAndView;
         } catch (Exception e) {
             e.printStackTrace();
-            ModelAndView modelAndView = new ModelAndView("public/error/error");
+            ModelAndView modelAndView = new ModelAndView("public/error");
             return modelAndView;
         }
     }

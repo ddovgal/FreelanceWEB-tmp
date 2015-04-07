@@ -10,8 +10,8 @@
     <%--include header--%>
     <%@ include file="/view/public/common/header.jsp" %>
 
-    <div class="content">
-        <h1 class="pageTitle">${successMessage}</h1>
+    <div class="content" align="center">
+        <h1 class="pageTitle" style="margin-top: 50px">${successMessage}</h1>
         <p></p>
     </div>
 
