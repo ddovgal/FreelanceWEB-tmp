@@ -188,10 +188,12 @@
                         <input class="coolButton" size="60" value="Delete this job" type="submit" style="margin-top: 10px">
                         <input type="hidden" value="${job.id}" name="jobId" />
                     </form>
-                    <form id="setFinished-button-form" action="${root}/jobs/setFinished" method="post">
-                        <input class="coolButton" size="60" value="Set finished" type="submit" style="margin-top: 10px">
-                        <input type="hidden" value="${job.id}" name="jobId" />
-                    </form>
+                    <c:if test="${!job.finished}">
+                        <form id="setFinished-button-form" action="${root}/jobs/setFinished" method="post">
+                            <input class="coolButton" size="60" value="Set finished" type="submit" style="margin-top: 10px">
+                            <input type="hidden" value="${job.id}" name="jobId" />
+                        </form>
+                    </c:if>
                 </c:if>
             </c:if>
         </div>

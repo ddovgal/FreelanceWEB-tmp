@@ -53,6 +53,7 @@ public class JobDAO implements CRUD<Job> {
         System.out.println("maxResults: " + maxResults);
 
         Criteria criteria = session.createCriteria(Job.class, "o");
+        criteria.add(Restrictions.eq("o.isFinished", false));
         if (title != null && !title.equals("")) {
             criteria.add(Restrictions.ilike("o.title", "%" + title + "%"));
         }
@@ -135,7 +136,7 @@ public class JobDAO implements CRUD<Job> {
         Session session = sessionFactory.getCurrentSession();
         Job job = ((Job) session.get(Job.class, id));
         DeveloperUser developerUser = job.getDeveloperUser();
-        developerUser.setRating(developerUser.getRating()+15);
+        if (developerUser!=null) developerUser.setRating(developerUser.getRating()+15);
         job.setFinished(true);
         job.setApplicants(null);
         update(job);
