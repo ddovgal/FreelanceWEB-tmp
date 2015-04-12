@@ -4,6 +4,10 @@ import com.project.businesslogic.user.User;
 
 import javax.persistence.*;
 
+/**
+ * Клас сутевість. Відображення таблиці complaint у базі данних. У скарги є
+ * людина, що написала скаргу, та замовлення з проблемою.
+ */
 @Entity
 @Table(name = "complaint")
 public class Complaint {

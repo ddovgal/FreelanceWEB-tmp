@@ -17,7 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Error_404 on 06.04.2015.
+ * Клас - контролер. Саме в цьому класі виконуеться обробка запитів, та видача відповідей на запит. Данний контролер
+ * оброблюе запити, пов'язані з діалоговими повідомленнями.
  */
 @Controller
 @RequestMapping("/messages")
@@ -36,6 +37,11 @@ public class DialogMessagesController {
         this.userDAO = userDAO;
     }
 
+    /**
+     * Редірект до сторінкі повідомлень вперше, вибір співрозмовника.
+     * @param myId id користувача, що зараз перейшов до повідомлень
+     * @return модель-представлення сторінки
+     */
     @RequestMapping(value = "/show", method = RequestMethod.POST)
     public ModelAndView showAll(@RequestParam(value = "myId") Long myId){
         List<User> interlocutors = dialogMessageDAO.getAllInterlocutors(myId, null, null);
@@ -45,6 +51,12 @@ public class DialogMessagesController {
         return modelAndView;
     }
 
+    /**
+     * Оновлення сторінкі повідомлень, показ повідомленнь для первного співрозмовника.
+     * @param principal об'єкт Spring security
+     * @param interlocutorId id первного співрозмовника
+     * @return модель-представлення сторінки
+     */
     @RequestMapping(value = "/show_for/{interlocutorId}", method = RequestMethod.GET)
     public ModelAndView getCustomerImage(Principal principal,
                                          @PathVariable("interlocutorId") Long interlocutorId) throws IOException {
@@ -69,6 +81,11 @@ public class DialogMessagesController {
         return modelAndView;
     }
 
+    /**
+     * Відправка повідомлення від данного корістувача його поточному співрозмовнику.
+     * @param body об'єкт, що несе усі данні
+     * @return модель-представлення сторінки
+     */
     @RequestMapping(value = "/send", method = RequestMethod.PUT)
     public HttpStatus sendMessage(@RequestBody MultiValueMap<String,String> body){
         try {

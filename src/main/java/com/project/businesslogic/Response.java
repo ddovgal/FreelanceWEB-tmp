@@ -5,6 +5,10 @@ import com.project.businesslogic.user.User;
 import javax.persistence.*;
 import java.util.Date;
 
+/**
+ * Клас сутевість. Відображення таблиці response у базі данних. У видгуку є текст повідомлення,
+ * дата написання, корістувач, що залишив повідомлення, та його оцинкаю
+ */
 @Entity
 @Table(name = "response")
 public class Response {

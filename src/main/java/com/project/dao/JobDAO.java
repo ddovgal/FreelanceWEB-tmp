@@ -10,6 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+/**
+ * DAO для робіт. Містить усі методи для взаемодії з БД.
+ */
 @Repository
 @Transactional
 public class JobDAO implements CRUD<Job> {
@@ -40,6 +43,16 @@ public class JobDAO implements CRUD<Job> {
         return (Job) criteria.uniqueResult();
     }
 
+    /**
+     * Знаходить серед усіх робіт ті, що підлягають певному критерію.
+     * @param title назва шуканої роботи
+     * @param priceMin мінімальна ціна шуканої роботи
+     * @param priceMax максимальна ціна шуканої роботи
+     * @param tags теги шуканої роботи
+     * @param firstResult обмеження пошуку - перший результат
+     * @param maxResults обмеження пошуку - останній результат
+     * @return список усіх знайдених робіт
+     */
     @Transactional(readOnly = true)
     public List<Job> getByCriterion(String title, Float priceMin, Float priceMax, String[] tags,
                                       Integer firstResult, Integer maxResults) {
@@ -80,6 +93,13 @@ public class JobDAO implements CRUD<Job> {
         return criteria.list();
     }
 
+    /**
+     * Повертає роботи по id її працівника.
+     * @param id id її працівника
+     * @param firstResult обмеження пошуку - перший результат
+     * @param maxResults обмеження пошуку - останній результат
+     * @return знайдені роботи
+     */
     @Transactional(readOnly = true)
     public List<Job> getByCustomerId(long id, Integer firstResult, Integer maxResults) {
         Session session = sessionFactory.getCurrentSession();
@@ -95,7 +115,11 @@ public class JobDAO implements CRUD<Job> {
     }
 
     /**
-     * @return all subscribed jobs by developer with this identifier
+     * Повертає роботи по id її претендента.
+     * @param id id її претендента
+     * @param firstResult обмеження пошуку - перший результат
+     * @param maxResults обмеження пошуку - останній результат
+     * @return знайдені роботи
      */
     @Transactional(readOnly = true)
     public List<Job> getByApplicant(long id, Integer firstResult, Integer maxResults) {
@@ -115,7 +139,11 @@ public class JobDAO implements CRUD<Job> {
     }
 
     /**
-     * @return all jobs by worker with this identifier
+     * Повертає роботи по id її працівника.
+     * @param id id її працівника
+     * @param firstResult обмеження пошуку - перший результат
+     * @param maxResults обмеження пошуку - останній результат
+     * @return знайдені роботи
      */
     @Transactional(readOnly = true)
     public List<Job> getByWorker(long id, Integer firstResult, Integer maxResults) {
@@ -131,6 +159,10 @@ public class JobDAO implements CRUD<Job> {
         return criteria.list();
     }
 
+    /**
+     * Змінюе статус роботи по її id.
+     * @param id її id
+     */
     @Transactional
     public void setFinished(Long id) {
         Session session = sessionFactory.getCurrentSession();

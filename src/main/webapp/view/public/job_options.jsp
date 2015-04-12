@@ -133,11 +133,13 @@
                             </table>
                             </p>
                             <div align="center" style="margin-top: 5px">
-                                <form id="dismiss-button-form" action="${root}/jobs/remove/developer" method="post" style="display: inline-block">
-                                    <input class="button_example" value="Dismiss" type="submit" style="margin-top: 10px; margin-right: 5px">
-                                    <input type="hidden" value="${job.id}" name="jobId" />
-                                    <input type="hidden" value="${developerUser.id}" name="developerId" />
-                                </form>
+                                <c:if test="${!job.finished}">
+                                    <form id="dismiss-button-form" action="${root}/jobs/remove/developer" method="post" style="display: inline-block">
+                                        <input class="button_example" value="Dismiss" type="submit" style="margin-top: 10px; margin-right: 5px">
+                                        <input type="hidden" value="${job.id}" name="jobId" />
+                                        <input type="hidden" value="${developerUser.id}" name="developerId" />
+                                    </form>
+                                </c:if>
                                 <form id="messageDeveloper-button-form" action="${root}/messages/show_for/${developerUser.id}" method="GET"  style="display: inline-block">
                                     <input class="button_example" value="Message" type="submit" style="margin-top: 10px; margin-left: 5px">
                                 </form>

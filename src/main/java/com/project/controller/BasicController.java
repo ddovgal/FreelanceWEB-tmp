@@ -16,6 +16,10 @@ import org.springframework.web.servlet.ModelAndView;
 import java.io.IOException;
 import java.util.Collection;
 
+/**
+ * Клас - контролер. Саме в цьому класі виконуеться обробка запитів, та видача відповідей на запит. Данний контролер
+ * оброблюе глобальні запити, потрібні для усіх типів користувачів, а також незайшовших у систему гостей.
+ */
 @Controller
 public class BasicController {
 
@@ -26,15 +30,22 @@ public class BasicController {
         this.imageDAO = imageDAO;
     }
 
+    /**
+     * Повернення на початкову сторінку.
+     * @return модель-представлення сторінки
+     */
     @RequestMapping("/home")
     public ModelAndView onIndex() {
         ModelAndView modelAndView = new ModelAndView("public/index");
         return modelAndView;
     }
 
+    /**
+     * Редірект до профілю користувача в залежності від його типу.
+     * @return модель-представлення сторінки
+     */
     @RequestMapping("/p-redirect")
     public ModelAndView profileRedirect() {
-//        CustomUserDetails userDetails = (CustomUserDetails) principal;
         ModelAndView modelAndView = null;
         if (hasRole("ROLE_DEVELOPER")) {
             System.out.println("Has role ROLE_DEVELOPER");
@@ -51,6 +62,11 @@ public class BasicController {
         return modelAndView;
     }
 
+    /**
+     * Перевірка на певну роль.
+     * @param role роль
+     * @return чи цього користувач типу
+     */
     private boolean hasRole(String role) {
         Collection<GrantedAuthority> authorities = (Collection<GrantedAuthority>)
                 SecurityContextHolder.getContext().getAuthentication().getAuthorities();
@@ -64,6 +80,11 @@ public class BasicController {
         return hasRole;
     }
 
+    /**
+     * Для обробки запросу на отримання аватару користувача по його id.
+     * @param userId його id
+     * @return його аватар
+     */
     @RequestMapping(value = "/user/image/{userId}")
     public ResponseEntity<byte[]> getCustomerImage(@PathVariable("userId") Long userId) throws IOException {
         final HttpHeaders headers = new HttpHeaders();

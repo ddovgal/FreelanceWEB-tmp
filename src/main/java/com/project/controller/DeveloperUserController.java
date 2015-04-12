@@ -21,6 +21,10 @@ import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
 
+/**
+ * Клас - контролер. Саме в цьому класі виконуеться обробка запитів, та видача відповідей на запит. Данний контролер
+ * оброблюе запити, потрібні для розробника, а токож усьго, з чим він трохи пов'язаний.
+ */
 @Controller
 @RequestMapping("/usr/developer")
 public class DeveloperUserController {
@@ -38,6 +42,11 @@ public class DeveloperUserController {
         this.jobService = jobService;
     }
 
+    /**
+     * Редірект до редагування профілю розробника.
+     * @param userId його id
+     * @return модель-представлення сторінки
+     */
     @RequestMapping(value = "/profileDetail", method = RequestMethod.GET)
     public ModelAndView redirectToProfileDetail(@RequestParam(value = "userId") Long userId) {
         ModelAndView modelAndView = new ModelAndView("private/developer/profile_detail");
@@ -46,6 +55,14 @@ public class DeveloperUserController {
         return modelAndView;
     }
 
+    /**
+     * Прийняття щойно відредагоаних данних розробника та їх оновлення.
+     * @param tmpUser щойно відредагоані данні розробника
+     * @param lastId id розробника
+     * @param userImage оновлений аватар
+     * @param principal об'єкт Spring security
+     * @return модель-представлення сторінки
+     */
     @RequestMapping(value = "/edit", method = RequestMethod.POST)
     public ModelAndView edit(@ModelAttribute DeveloperUser tmpUser,
                              @RequestParam(value = "lastId") Long lastId,
@@ -70,6 +87,11 @@ public class DeveloperUserController {
         }
     }
 
+    /**
+     * Регістрація нового розробника.
+     * @param developerUser щойно створені данні розробника
+     * @return модель-представлення сторінки
+     */
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public ModelAndView create(@ModelAttribute DeveloperUser developerUser) {
         developerUser.setUserType(UserType.DEVELOPER);
@@ -89,6 +111,11 @@ public class DeveloperUserController {
         }
     }
 
+    /**
+     * Редірект до профілю розробника.
+     * @param principal об'єкт Spring security
+     * @return модель-представлення сторінки
+     */
     @RequestMapping(value = "/profile", method = RequestMethod.GET)
     public ModelAndView developerUserProfile(Principal principal) {
         try {

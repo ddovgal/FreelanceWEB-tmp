@@ -10,6 +10,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+/**
+ * Клас - контролер. Саме в цьому класі виконуеться обробка запитів, та видача відповідей на запит. Данний контролер
+ * оброблюе запити, потрібні для адміністратора, а токож усьго, з чим він трохи пов'язаний.
+ */
 @Controller
 @RequestMapping("/usr/admin")
 public class AdminUserController {
@@ -21,6 +25,11 @@ public class AdminUserController {
         this.adminUserDAO = adminUserDAO;
     }
 
+    /**
+     * Регістрація нового адміністратора.
+     * @param adminUser щойно створені данні адміністратора
+     * @return модель-представлення сторінки
+     */
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public ModelAndView create(@ModelAttribute AdminUser adminUser) {
         adminUser.setUserType(UserType.ADMIN);

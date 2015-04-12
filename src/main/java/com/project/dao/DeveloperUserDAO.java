@@ -13,6 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * DAO для розробника. Містить усі методи для взаемодії з БД.
+ */
 @Repository
 @Transactional
 public class DeveloperUserDAO implements CRUD<DeveloperUser> {
@@ -39,6 +42,11 @@ public class DeveloperUserDAO implements CRUD<DeveloperUser> {
         return (DeveloperUser) session.get(DeveloperUser.class, id);
     }
 
+    /**
+     * Отримуе розробника по його email.
+     * @param email mail замовника
+     * @return розробника по його email
+     */
     @Transactional(readOnly = true)
     public DeveloperUser getByEmail(String email) {
         Session session = sessionFactory.getCurrentSession();
@@ -46,6 +54,12 @@ public class DeveloperUserDAO implements CRUD<DeveloperUser> {
                 .setParameter("email", email).uniqueResult();
     }
 
+    /**
+     * Перевіряе, чи є розробник претендентом на роботу.
+     * @param jobId id роботи
+     * @param developerName ім'я (email у principal) розробника
+     * @return чи є розробник претендентом на роботу
+     */
     @Transactional(readOnly = true)
     public boolean isApplicableForJob(long jobId, String developerName) {
         Session session = sessionFactory.getCurrentSession();
@@ -57,6 +71,12 @@ public class DeveloperUserDAO implements CRUD<DeveloperUser> {
         return j != null;
     }
 
+    /**
+     * Перевіряе, чи є розробник виконавцем данної роботи.
+     * @param jobId id роботи
+     * @param developerName ім'я (email у principal) розробника
+     * @return чи є розробник виконавцем данної роботи
+     */
     @Transactional(readOnly = true)
     public boolean isWorkerOfJob(long jobId, String developerName) {
         Session session = sessionFactory.getCurrentSession();
@@ -68,6 +88,13 @@ public class DeveloperUserDAO implements CRUD<DeveloperUser> {
         return j != null;
     }
 
+
+    /**
+     * Оновлюе розробника на основі нових данних.
+     * @param realUserId id змінюваного розробника
+     * @param tmpUser новий розробник з новими данними
+     * @param customUserDetails об'єкт Spring security для корегування поточної сесії
+     */
     @Transactional
     public void realUpdate(Long realUserId, DeveloperUser tmpUser, CustomUserDetails customUserDetails){
         Session session = sessionFactory.getCurrentSession();

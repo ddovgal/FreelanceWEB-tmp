@@ -5,6 +5,10 @@ import com.project.businesslogic.user.User;
 import javax.persistence.*;
 import java.util.Date;
 
+/**
+ * Клас сутевість. Відображення таблиці dialog_message у базі данних. У діалогового повідомлення є
+ * відправник, отримувач, дата відправлення та текст повідомлення.
+ */
 @Entity
 @Table(name = "dialog_message")
 public class DialogMessage {

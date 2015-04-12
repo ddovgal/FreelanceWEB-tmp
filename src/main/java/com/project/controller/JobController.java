@@ -18,6 +18,10 @@ import org.springframework.web.servlet.ModelAndView;
 import java.security.Principal;
 import java.util.List;
 
+/**
+ * Клас - контролер. Саме в цьому класі виконуеться обробка запитів, та видача відповідей на запит. Данний контролер
+ * оброблюе запити, пов'язані з роботами.
+ */
 @Controller
 @RequestMapping("/jobs")
 public class JobController {
@@ -41,6 +45,12 @@ public class JobController {
         this.userDAO = userDAO;
     }
 
+    /**
+     * Редірект до сторінки детальної інформації данної роботи.
+     * @param principal об'єкт Spring security
+     * @param jobId робота, яку детально треба продивитися
+     * @return модель-представлення сторінки
+     */
     @Transactional
     @RequestMapping(value = "/options", method = RequestMethod.GET)
     public ModelAndView get(Principal principal, @RequestParam(value = "jobId") Long jobId) {
@@ -94,6 +104,16 @@ public class JobController {
         }
     }
 
+    /**
+     * Вибір серед усіх робіт лише ті, що підпадають під запит.
+     * @param title назва шуканої роботи
+     * @param priceMin мінімальна ціна шуканої роботи
+     * @param priceMax максимальна ціна шуканої роботи
+     * @param tags теги шуканої роботи
+     * @param firstResult обмеження пошуку - перший результат
+     * @param maxResults обмеження пошуку - останній результат
+     * @return модель-представлення сторінки
+     */
     @RequestMapping(value = "/byCriterion", method = RequestMethod.GET)
     public ModelAndView getJobsByCriterion(@RequestParam(value = "title", required = false) String title,
                                                 @RequestParam(value = "priceMin", required = false) Float priceMin,
@@ -124,6 +144,10 @@ public class JobController {
         }
     }
 
+    /**
+     * Редірект до сторінки створення нової роботи.
+     * @return модель-представлення сторінки
+     */
     @RequestMapping(value = "/newJob", method = RequestMethod.GET)
     public ModelAndView redirectToCreation() {
         ModelAndView modelAndView = new ModelAndView("private/customer/job_register-edit");
@@ -131,6 +155,11 @@ public class JobController {
         return modelAndView;
     }
 
+    /**
+     * Редірект до сторінки редагуваення певної роботи.
+     * @param jobId id роботи, що необхідно редагувати
+     * @return модель-представлення сторінки
+     */
     @RequestMapping(value = "/editJob", method = RequestMethod.GET)
     public ModelAndView redirectToEdit(@RequestParam(value = "jobId") Long jobId) {
         ModelAndView modelAndView = new ModelAndView("private/customer/job_register-edit");
@@ -140,6 +169,11 @@ public class JobController {
         return modelAndView;
     }
 
+    /**
+     * Видалення роботи по її id.
+     * @param body об'єкт, що несе усі данні
+     * @return модель-представлення сторінки
+     */
     @RequestMapping(value = "/deleteJob", method = RequestMethod.POST)
     @ResponseBody
     public ModelAndView deleteJob(@RequestBody MultiValueMap<String,String> body) {
@@ -156,6 +190,14 @@ public class JobController {
         return modelAndView;
     }
 
+    /**
+     * Редірект до сторінки створення певної роботи.
+     * @param job щойно створена\відредагована робота
+     * @param customerId id замовника
+     * @param isToCreate чи на створення прийшов запит
+     * @param lastId id редагуемої роботи(для редагування)
+     * @return модель-представлення сторінки
+     */
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public ModelAndView createJob(@ModelAttribute("job") Job job,
                                   @RequestParam(value = "customerId") Long customerId,
@@ -176,6 +218,11 @@ public class JobController {
         return modelAndView;
     }
 
+    /**
+     * Зміна статусу данної роботи на виконано
+     * @param jobId id роботі, яку необхідно закрити
+     * @return модель-представлення сторінки
+     */
     @RequestMapping(value = "/setFinished", method = RequestMethod.POST)
     public ModelAndView setFinished(@RequestParam(value = "jobId") Long jobId){
         ModelAndView modelAndView = new ModelAndView("public/on_success");
@@ -185,6 +232,12 @@ public class JobController {
         return  modelAndView;
     }
 
+    /**
+     * Визначення данного розробника виконавцем данної роботи.
+     * @param jobId id роботи
+     * @param developerId id розробника
+     * @return модель-представлення сторінки
+     */
     @RequestMapping(value = "/add/developer", method = RequestMethod.POST)
     @ResponseBody
     public ModelAndView addDeveloper(@RequestParam Long jobId, @RequestParam Long developerId) {
@@ -202,6 +255,12 @@ public class JobController {
         }
     }
 
+    /**
+     * Звільнення данного розробника з поста виконавця данної роботи.
+     * @param jobId id роботи
+     * @param developerId id розробника
+     * @return модель-представлення сторінки
+     */
     @RequestMapping(value = "/remove/developer", method = RequestMethod.POST)
     @ResponseBody
     public ModelAndView removeDeveloper(@RequestParam Long jobId, @RequestParam Long developerId) {
@@ -218,6 +277,11 @@ public class JobController {
         }
     }
 
+    /**
+     * Доповнення списку претендентів данної роботи новим претендентом.
+     * @param body об'єкт, що несе усі данні
+     * @return модель-представлення сторінки
+     */
     @RequestMapping(value = "/add/applicant", method = RequestMethod.PUT)
     @ResponseBody
     public HttpStatus addApplicant(@RequestBody MultiValueMap<String,String> body) {
@@ -232,6 +296,11 @@ public class JobController {
         }
     }
 
+    /**
+     * Видалення зі списку претендентів данної роботи данного претенденту.
+     * @param body об'єкт, що несе усі данні
+     * @return модель-представлення сторінки
+     */
     @RequestMapping(value = "/remove/applicant", method = RequestMethod.PUT)
     @ResponseBody
     public HttpStatus removeApplicant(@RequestBody MultiValueMap<String,String> body) {

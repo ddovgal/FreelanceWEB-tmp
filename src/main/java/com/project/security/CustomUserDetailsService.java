@@ -10,7 +10,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.util.List;
 
-
+/**
+ * Клас Spring security, необхідний для опрацювання входу користувача.
+ * На основі введених данних призначає поточному користувачу певний тип.
+ */
 public class CustomUserDetailsService implements UserDetailsService {
 
     private UserDAO userDAO;

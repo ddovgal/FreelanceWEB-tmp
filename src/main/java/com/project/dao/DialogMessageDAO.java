@@ -13,6 +13,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
+/**
+ * DAO для діалогових повідомлень. Містить усі методи для взаемодії з БД.
+ */
 @Repository
 @Transactional
 public class DialogMessageDAO implements CRUD<DialogMessage>{
@@ -37,6 +40,13 @@ public class DialogMessageDAO implements CRUD<DialogMessage>{
         return object.getId();
     }
 
+    /**
+     * Створення діалогового повідомлення на основі id відправника та отримувача і тексту повідомлення.
+     * @param senderId id відправника
+     * @param receiverId id отримувача
+     * @param text текст повідомлення
+     * @return id щойно створеного діалогового повідомлення
+     */
     @Transactional
     public long realCreate(Long senderId, Long receiverId, String text){
         Session session = sessionFactory.getCurrentSession();
@@ -59,6 +69,13 @@ public class DialogMessageDAO implements CRUD<DialogMessage>{
         return (DialogMessage) criteria.uniqueResult();
     }
 
+    /**
+     * Повертає усі повідомлення, у яких користувач з данним id був чи відправником, чи отримувачем.
+     * @param userId id користувача
+     * @param firstResult обмеження пошуку - перший результат
+     * @param maxResults обмеження пошуку - останній результат
+     * @return список знайдених повідомлень
+     */
     @Transactional(readOnly = true)
     public List<DialogMessage> getByUserId(Long userId, Integer firstResult, Integer maxResults){
         Session session = sessionFactory.getCurrentSession();
@@ -76,6 +93,13 @@ public class DialogMessageDAO implements CRUD<DialogMessage>{
         return criteria.list();
     }
 
+    /**
+     * Повертае усіх співрозмовників данного користувача.
+     * @param myId id данного користувача
+     * @param firstResult обмеження пошуку - перший результат
+     * @param maxResults обмеження пошуку - останній результат
+     * @return список усіх співрозмовників данного користувача
+     */
     @Transactional(readOnly = true)
     public List<User> getAllInterlocutors(Long myId, Integer firstResult, Integer maxResults){
         Session session = sessionFactory.getCurrentSession();
@@ -90,6 +114,14 @@ public class DialogMessageDAO implements CRUD<DialogMessage>{
         return resultList;
     }
 
+    /**
+     * Повертае усі повідомлення між поточним користувачем та його певним співрозмовником.
+     * @param myId id поточного користувача
+     * @param interlocutorId id співрозмовника
+     * @param firstResult обмеження пошуку - перший результат
+     * @param maxResults обмеження пошуку - останній результат
+     * @return список повідомлень
+     */
     @Transactional(readOnly = true)
     public List<DialogMessage> getMessagesForInterlocutor(Long myId, Long interlocutorId, Integer firstResult, Integer maxResults){
         Session session = sessionFactory.getCurrentSession();

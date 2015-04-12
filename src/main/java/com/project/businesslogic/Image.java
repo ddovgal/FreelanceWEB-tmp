@@ -2,6 +2,9 @@ package com.project.businesslogic;
 
 import javax.persistence.*;
 
+/**
+ * Клас сутевість. Відображення таблиці image у базі данних. Зображення зберігаеться як масив байтів.
+ */
 @Entity
 @Table(name = "image")
 public class Image {

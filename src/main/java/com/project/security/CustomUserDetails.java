@@ -5,6 +5,10 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 
+/**
+ * Клас Spring security. Визначае деталі та данні користувача поточної сесії.
+ * В данному класі у користувача визначені id, ПІБ, пароль та email.
+ */
 public class CustomUserDetails implements UserDetails {
 
     private Collection<? extends GrantedAuthority> authorities;

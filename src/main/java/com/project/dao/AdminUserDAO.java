@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * DAO для адміністратора. Містить усі методи для взаемодії з БД.
+ */
 @Repository
 @Transactional
 public class AdminUserDAO implements CRUD<AdminUser> {

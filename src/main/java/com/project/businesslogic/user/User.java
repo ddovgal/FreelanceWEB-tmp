@@ -7,6 +7,10 @@ import org.springframework.format.annotation.DateTimeFormat;
 import javax.persistence.*;
 import java.util.Date;
 
+/**
+ * Клас сутевість типу загального користувача. Відображення таблиці user у базі данних.
+ * У кожного користувача є тип, ПІБ, пароль, email, дата народження, рейтинг, та, можливий, аватар.
+ */
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @Table(name = "user")

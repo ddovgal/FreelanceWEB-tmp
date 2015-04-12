@@ -5,6 +5,10 @@ import com.project.businesslogic.user.User;
 
 import javax.persistence.*;
 
+/**
+ * Клас сутевість. Відображення таблиці service_message у базі данних. У сервісного повідомлення є адміністратор,
+ * що був закріпленій, робота, що викликала проблему, скаржник та виновник.
+ */
 @Entity
 @Table(name = "service_message")
 public class ServiceMessage {

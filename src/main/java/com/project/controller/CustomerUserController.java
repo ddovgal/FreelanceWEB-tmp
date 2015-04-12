@@ -21,6 +21,10 @@ import java.io.IOException;
 import java.security.Principal;
 import java.util.List;
 
+/**
+ * Клас - контролер. Саме в цьому класі виконуеться обробка запитів, та видача відповідей на запит. Данний контролер
+ * оброблюе запити, потрібні для замовника, а токож усьго, з чим він трохи пов'язаний.
+ */
 @Controller
 @RequestMapping("/usr/customer")
 public class CustomerUserController {
@@ -38,6 +42,11 @@ public class CustomerUserController {
         this.customerUserDAO = customerUserDAO;
     }
 
+    /**
+     * Редірект до редагування профілю замовника.
+     * @param userId його id
+     * @return модель-представлення сторінки
+     */
     @RequestMapping(value = "/profileDetail", method = RequestMethod.GET)
     public ModelAndView redirectToProfileDetail(@RequestParam(value = "userId") Long userId) {
         ModelAndView modelAndView = new ModelAndView("private/customer/profile_detail");
@@ -46,6 +55,14 @@ public class CustomerUserController {
         return modelAndView;
     }
 
+    /**
+     * Прийняття щойно відредагоаних данних замовника та їх оновлення.
+     * @param tmpUser щойно відредагоані данні замовника
+     * @param lastId id замовника
+     * @param userImage оновлений аватар
+     * @param principal об'єкт Spring security
+     * @return модель-представлення сторінки
+     */
     @RequestMapping(value = "/edit", method = RequestMethod.POST)
     public ModelAndView edit(@ModelAttribute CustomerUser tmpUser,
                              @RequestParam(value = "lastId") Long lastId,
@@ -70,6 +87,11 @@ public class CustomerUserController {
         }
     }
 
+    /**
+     * Регістрація нового замовника.
+     * @param customerUser щойно створені данні замовника
+     * @return модель-представлення сторінки
+     */
     @RequestMapping(value = "/register", method = RequestMethod.POST)
     public ModelAndView create(@ModelAttribute CustomerUser customerUser) {
         customerUser.setUserType(UserType.CUSTOMER);
@@ -88,6 +110,11 @@ public class CustomerUserController {
         }
     }
 
+    /**
+     * Редірект до профілю замовника.
+     * @param principal об'єкт Spring security
+     * @return модель-представлення сторінки
+     */
     @RequestMapping(value = "/profile", method = RequestMethod.GET)
     public ModelAndView developerUserProfile(Principal principal) {
         try {
@@ -107,6 +134,10 @@ public class CustomerUserController {
         }
     }
 
+    /**
+     * Редірект до повідомлень замовника.
+     * @return модель-представлення сторінки
+     */
     @RequestMapping(value = "/messages", method = RequestMethod.GET)
     public ModelAndView redirectToMessages() {
         try {

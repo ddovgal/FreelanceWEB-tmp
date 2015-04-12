@@ -7,6 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * DAO для будь-якого типу користувача. Містить усі методи для взаемодії з БД.
+ */
 @Repository
 public class UserDAO implements CRUD<User> {
 
@@ -17,6 +20,11 @@ public class UserDAO implements CRUD<User> {
         this.sessionFactory = sessionFactory;
     }
 
+    /**
+     * Отримуе користувача по його email.
+     * @param email mail користувача
+     * @return користувача по його email
+     */
     @Transactional(readOnly = true)
     public User getByEmail(String email) {
         Session session = sessionFactory.getCurrentSession();

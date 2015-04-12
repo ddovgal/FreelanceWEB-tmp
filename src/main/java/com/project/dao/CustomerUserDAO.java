@@ -12,6 +12,9 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+/**
+ * DAO для замовника. Містить усі методи для взаемодії з БД.
+ */
 @Repository
 @Transactional
 public class CustomerUserDAO implements CRUD<CustomerUser> {
@@ -37,6 +40,11 @@ public class CustomerUserDAO implements CRUD<CustomerUser> {
         return (CustomerUser) session.get(CustomerUser.class, id);
     }
 
+    /**
+     * Отримуе замовника по його email.
+     * @param email mail замовника
+     * @return замовника по його email
+     */
     @Transactional(readOnly = true)
     public CustomerUser getByEmail(String email) {
         Session session = sessionFactory.getCurrentSession();
@@ -44,6 +52,12 @@ public class CustomerUserDAO implements CRUD<CustomerUser> {
                 .setParameter("email", email).uniqueResult();
     }
 
+    /**
+     * Оновлюе замовника на основі нових данних.
+     * @param realUserId id змінюваного замовника
+     * @param tmpUser новий замовник з новими данними
+     * @param customUserDetails об'єкт Spring security для корегування поточної сесії
+     */
     @Transactional
     public void realUpdate(Long realUserId, CustomerUser tmpUser, CustomUserDetails customUserDetails){
         Session session = sessionFactory.getCurrentSession();
